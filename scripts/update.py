@@ -113,11 +113,13 @@ def etf_quotes():
  def one(e):
   code=e['code'];market=1 if code.startswith(('5','6')) else 0
   try:
-   d=json.loads(get(f"https://push2.eastmoney.com/api/qt/stock/get?secid={market}.{code}&fields=f43,f48,f57,f58,f170")).get('data') or {};div=1000
+   d=json.loads(get(f"https://push2.eastmoney.com/api/qt/stock/get?secid={market}.{code}&fields=f43,f48,f57,f58,f124,f170,f297,f402,f441")).get('data') or {};div=1000
    def num(k,dv=1):
     try:return float(d.get(k))/dv
     except:return None
-   return {**e,'market':market,'price':num('f43',div),'change_pct':num('f170',100),'amount':num('f48'),'updated_at':now.isoformat(timespec='seconds')}
+   discount=num('f402',100)
+   premium=(-discount if discount is not None else None)
+   return {**e,'market':market,'price':num('f43',div),'change_pct':num('f170',100),'amount':num('f48'),'premium_pct':premium,'premium_raw_discount_pct':discount,'iopv':num('f441',1000),'market_date':str(d.get('f297') or ''),'market_timestamp':d.get('f124'),'premium_source':'东方财富ETF行情同源折价率(f402)','updated_at':now.isoformat(timespec='seconds')}
   except Exception as ex:return {**e,'market':market,'price':None,'change_pct':None,'amount':None,'error':str(ex)}
  with ThreadPoolExecutor(max_workers=12) as ex:
   for x in ex.map(one,master.values()):out.append(x)
@@ -137,7 +139,7 @@ def main():
   else:
    a,b=comparable(x.get('agency_limit')),comparable(p.get('agency_limit'))
    x['change']='same' if a==b else ('changed')
- etf=etf_quotes();payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（额度/费率/T-1溢价）','东方财富公开场内行情'],'validation_note':'代销额度由天天基金销售页交叉核对；直销/费率/T-1溢价来自公开汇总，实际交易以基金公司及销售渠道为准'}
+ etf=etf_quotes();payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富公开场内行情'],'validation_note':'场内价格、涨跌、成交额、折溢价率取东方财富同一行情源；场外代销额度由天天基金销售页交叉核对，直销/费率来自公开汇总，实际交易以基金公司及销售渠道为准'}
  tmp=DATA/'latest.tmp.json';tmp.write_text(json.dumps(payload,ensure_ascii=False,indent=2),'utf-8');tmp.replace(DATA/'latest.json');(HIST/f'{today}.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),'utf-8')
  print(json.dumps({'ok':True,'duration_seconds':payload['duration_seconds'],'otc':len(otc),'etf':len(etf),'errors':len(errs)},ensure_ascii=False))
 if __name__=='__main__':main()
