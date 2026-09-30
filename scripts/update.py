@@ -113,7 +113,7 @@ def etf_quotes():
  def one(e):
   code=e['code'];market=1 if code.startswith(('5','6')) else 0
   try:
-   d=json.loads(get(f"https://push2.eastmoney.com/api/qt/stock/get?secid={market}.{code}&fields=f43,f48,f57,f58,f152,f170")).get('data') or {};dp=int(d.get('f152') or 3);div=10**dp
+   d=json.loads(get(f"https://push2.eastmoney.com/api/qt/stock/get?secid={market}.{code}&fields=f43,f48,f57,f58,f170")).get('data') or {};div=1000
    def num(k,dv=1):
     try:return float(d.get(k))/dv
     except:return None
