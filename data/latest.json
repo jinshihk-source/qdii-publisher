@@ -1,7 +1,7 @@
 {
   "date": "2026-09-30",
-  "updated_at": "2026-09-30T21:26:01+08:00",
-  "duration_seconds": 9.92,
+  "updated_at": "2026-09-30T21:29:17+08:00",
+  "duration_seconds": 9.6,
   "otc": [
     {
       "index": "nasdaq100",
@@ -19,7 +19,7 @@
       "agency_status": "unavailable",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/021000.html",
-      "fetch_seconds": 0.337,
+      "fetch_seconds": 0.357,
       "verification": "agency-source-diff",
       "change": "new"
     },
@@ -39,7 +39,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019441.html",
-      "fetch_seconds": 0.553,
+      "fetch_seconds": 0.38,
       "verification": "matched",
       "change": "new"
     },
@@ -59,7 +59,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019442.html",
-      "fetch_seconds": 0.301,
+      "fetch_seconds": 0.374,
       "verification": "matched",
       "change": "new"
     },
@@ -79,7 +79,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/000834.html",
-      "fetch_seconds": 0.453,
+      "fetch_seconds": 0.388,
       "verification": "matched",
       "change": "new"
     },
@@ -99,7 +99,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/008971.html",
-      "fetch_seconds": 0.409,
+      "fetch_seconds": 0.384,
       "verification": "matched",
       "change": "new"
     },
@@ -139,7 +139,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/539001.html",
-      "fetch_seconds": 0.289,
+      "fetch_seconds": 0.208,
       "verification": "matched",
       "change": "new"
     },
@@ -159,7 +159,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/012752.html",
-      "fetch_seconds": 0.407,
+      "fetch_seconds": 0.247,
       "verification": "matched",
       "change": "new"
     },
@@ -179,7 +179,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016452.html",
-      "fetch_seconds": 0.219,
+      "fetch_seconds": 0.349,
       "verification": "matched",
       "change": "new"
     },
@@ -199,7 +199,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016453.html",
-      "fetch_seconds": 0.212,
+      "fetch_seconds": 0.061,
       "verification": "matched",
       "change": "new"
     },
@@ -219,7 +219,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019736.html",
-      "fetch_seconds": 0.25,
+      "fetch_seconds": 0.375,
       "verification": "matched",
       "change": "new"
     },
@@ -239,7 +239,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019737.html",
-      "fetch_seconds": 0.24,
+      "fetch_seconds": 0.356,
       "verification": "matched",
       "change": "new"
     },
@@ -259,7 +259,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/023422.html",
-      "fetch_seconds": 0.324,
+      "fetch_seconds": 0.174,
       "verification": "matched",
       "change": "new"
     },
@@ -279,7 +279,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019547.html",
-      "fetch_seconds": 0.171,
+      "fetch_seconds": 0.252,
       "verification": "matched",
       "change": "new"
     },
@@ -299,7 +299,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019548.html",
-      "fetch_seconds": 0.263,
+      "fetch_seconds": 0.39,
       "verification": "matched",
       "change": "new"
     },
@@ -319,7 +319,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019172.html",
-      "fetch_seconds": 0.334,
+      "fetch_seconds": 0.381,
       "verification": "matched",
       "change": "new"
     },
@@ -339,7 +339,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019173.html",
-      "fetch_seconds": 0.382,
+      "fetch_seconds": 0.307,
       "verification": "matched",
       "change": "new"
     },
@@ -359,7 +359,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/040046.html",
-      "fetch_seconds": 0.21,
+      "fetch_seconds": 0.243,
       "verification": "matched",
       "change": "new"
     },
@@ -379,7 +379,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/014978.html",
-      "fetch_seconds": 0.406,
+      "fetch_seconds": 0.243,
       "verification": "matched",
       "change": "new"
     },
@@ -399,7 +399,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019524.html",
-      "fetch_seconds": 0.333,
+      "fetch_seconds": 0.377,
       "verification": "matched",
       "change": "new"
     },
@@ -419,7 +419,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019525.html",
-      "fetch_seconds": 0.212,
+      "fetch_seconds": 0.221,
       "verification": "matched",
       "change": "new"
     },
@@ -439,7 +439,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/022664.html",
-      "fetch_seconds": 0.269,
+      "fetch_seconds": 0.376,
       "verification": "matched",
       "change": "new"
     },
@@ -459,7 +459,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/015299.html",
-      "fetch_seconds": 0.465,
+      "fetch_seconds": 0.086,
       "verification": "matched",
       "change": "new"
     },
@@ -479,7 +479,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/015300.html",
-      "fetch_seconds": 0.202,
+      "fetch_seconds": 0.317,
       "verification": "matched",
       "change": "new"
     },
@@ -499,7 +499,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016055.html",
-      "fetch_seconds": 0.463,
+      "fetch_seconds": 0.386,
       "verification": "matched",
       "change": "new"
     },
@@ -519,7 +519,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016057.html",
-      "fetch_seconds": 0.344,
+      "fetch_seconds": 0.374,
       "verification": "matched",
       "change": "new"
     },
@@ -539,7 +539,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/024237.html",
-      "fetch_seconds": 0.251,
+      "fetch_seconds": 0.381,
       "verification": "matched",
       "change": "new"
     },
@@ -559,7 +559,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016532.html",
-      "fetch_seconds": 0.78,
+      "fetch_seconds": 0.362,
       "verification": "matched",
       "change": "new"
     },
@@ -579,7 +579,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016533.html",
-      "fetch_seconds": 0.839,
+      "fetch_seconds": 0.457,
       "verification": "matched",
       "change": "new"
     },
@@ -599,7 +599,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/021838.html",
-      "fetch_seconds": 0.198,
+      "fetch_seconds": 0.306,
       "verification": "matched",
       "change": "new"
     },
@@ -619,7 +619,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/160213.html",
-      "fetch_seconds": 0.215,
+      "fetch_seconds": 0.18,
       "verification": "matched",
       "change": "new"
     },
@@ -639,7 +639,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018043.html",
-      "fetch_seconds": 0.911,
+      "fetch_seconds": 0.393,
       "verification": "matched",
       "change": "new"
     },
@@ -659,7 +659,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018044.html",
-      "fetch_seconds": 0.521,
+      "fetch_seconds": 0.088,
       "verification": "matched",
       "change": "new"
     },
@@ -699,7 +699,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/270042.html",
-      "fetch_seconds": 1.144,
+      "fetch_seconds": 0.245,
       "verification": "matched",
       "change": "new"
     },
@@ -719,7 +719,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/006479.html",
-      "fetch_seconds": 0.462,
+      "fetch_seconds": 0.376,
       "verification": "matched",
       "change": "new"
     },
@@ -759,7 +759,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/012870.html",
-      "fetch_seconds": 0.495,
+      "fetch_seconds": 0.228,
       "verification": "matched",
       "change": "new"
     },
@@ -779,7 +779,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018966.html",
-      "fetch_seconds": 0.219,
+      "fetch_seconds": 0.086,
       "verification": "matched",
       "change": "new"
     },
@@ -799,7 +799,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018967.html",
-      "fetch_seconds": 0.423,
+      "fetch_seconds": 0.367,
       "verification": "matched",
       "change": "new"
     },
@@ -819,7 +819,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/021773.html",
-      "fetch_seconds": 0.276,
+      "fetch_seconds": 0.023,
       "verification": "matched",
       "change": "new"
     },
@@ -839,7 +839,7 @@
       "agency_status": "unavailable",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/022523.html",
-      "fetch_seconds": 0.243,
+      "fetch_seconds": 0.308,
       "verification": "agency-source-diff",
       "change": "new"
     },
@@ -859,7 +859,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/017641.html",
-      "fetch_seconds": 0.941,
+      "fetch_seconds": 0.452,
       "verification": "matched",
       "change": "new"
     },
@@ -879,7 +879,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019305.html",
-      "fetch_seconds": 0.375,
+      "fetch_seconds": 0.385,
       "verification": "matched",
       "change": "new"
     },
@@ -899,7 +899,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018064.html",
-      "fetch_seconds": 0.369,
+      "fetch_seconds": 0.235,
       "verification": "matched",
       "change": "new"
     },
@@ -919,7 +919,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018065.html",
-      "fetch_seconds": 2.046,
+      "fetch_seconds": 0.423,
       "verification": "matched",
       "change": "new"
     },
@@ -939,7 +939,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/050025.html",
-      "fetch_seconds": 0.293,
+      "fetch_seconds": 0.372,
       "verification": "matched",
       "change": "new"
     },
@@ -959,7 +959,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/006075.html",
-      "fetch_seconds": 0.452,
+      "fetch_seconds": 4.579,
       "verification": "matched",
       "change": "new"
     },
@@ -979,7 +979,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018738.html",
-      "fetch_seconds": 0.283,
+      "fetch_seconds": 0.383,
       "verification": "matched",
       "change": "new"
     },
@@ -999,7 +999,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/017028.html",
-      "fetch_seconds": 0.8,
+      "fetch_seconds": 0.29,
       "verification": "matched",
       "change": "new"
     },
@@ -1019,7 +1019,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/017030.html",
-      "fetch_seconds": 0.631,
+      "fetch_seconds": 0.441,
       "verification": "matched",
       "change": "new"
     },
@@ -1039,7 +1039,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/007721.html",
-      "fetch_seconds": 0.447,
+      "fetch_seconds": 0.223,
       "verification": "matched",
       "change": "new"
     },
@@ -1059,7 +1059,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/007722.html",
-      "fetch_seconds": 1.349,
+      "fetch_seconds": 0.38,
       "verification": "matched",
       "change": "new"
     },
@@ -1079,7 +1079,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/161125.html",
-      "fetch_seconds": 0.19,
+      "fetch_seconds": 0.387,
       "verification": "matched",
       "change": "new"
     },
@@ -1099,7 +1099,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/012860.html",
-      "fetch_seconds": 0.35,
+      "fetch_seconds": 0.447,
       "verification": "matched",
       "change": "new"
     }
@@ -1116,12 +1116,10 @@
       "fee_annual": 0.8,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 2.352,
-      "change_pct": 1.2,
-      "amount": 597044697.0,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1134,12 +1132,10 @@
       "fee_annual": 1.0,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 1.735,
-      "change_pct": 1.58,
-      "amount": 1323268037.276,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1152,12 +1148,10 @@
       "fee_annual": 0.6,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 4.796,
-      "change_pct": 1.46,
-      "amount": 30312340.296,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1170,12 +1164,10 @@
       "fee_annual": 0.8,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 2.818,
-      "change_pct": 1.4,
-      "amount": 509169013.0,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1188,12 +1180,10 @@
       "fee_annual": 0.8,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 2.566,
-      "change_pct": 1.34,
-      "amount": 371533083.166,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1206,12 +1196,10 @@
       "fee_annual": 1.0,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 2.59,
-      "change_pct": 1.33,
-      "amount": 252126624.0,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1224,12 +1212,10 @@
       "fee_annual": 0.65,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 2.476,
-      "change_pct": 1.64,
-      "amount": 179522385.846,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1242,12 +1228,10 @@
       "fee_annual": 0.65,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 2.455,
-      "change_pct": 1.32,
-      "amount": 265737365.617,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1260,12 +1244,10 @@
       "fee_annual": 0.65,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 2.524,
-      "change_pct": 0.84,
-      "amount": 208808148.0,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1278,12 +1260,10 @@
       "fee_annual": 0.6,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 2.205,
-      "change_pct": -1.39,
-      "amount": 835292458.79,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1296,12 +1276,10 @@
       "fee_annual": 1.0,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 1.879,
-      "change_pct": 1.51,
-      "amount": 368276912.684,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1314,12 +1292,10 @@
       "fee_annual": 0.6,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 2.124,
-      "change_pct": 1.58,
-      "amount": 113467808.71,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "NDX100",
@@ -1332,12 +1308,10 @@
       "fee_annual": 0.6,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 2.154,
-      "change_pct": 1.27,
-      "amount": 211391796.0,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "SP500",
@@ -1350,12 +1324,10 @@
       "fee_annual": 0.8,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 2.688,
-      "change_pct": -0.07,
-      "amount": 268249988.0,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "SP500",
@@ -1368,12 +1340,10 @@
       "fee_annual": 1.0,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 3.275,
-      "change_pct": 1.08,
-      "amount": 18680011.104,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "SP500",
@@ -1386,12 +1356,10 @@
       "fee_annual": 0.75,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 2.076,
-      "change_pct": 0.24,
-      "amount": 30283380.0,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "SP500",
@@ -1404,12 +1372,10 @@
       "fee_annual": 0.75,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 2.013,
-      "change_pct": 0.5,
-      "amount": 134037387.076,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     },
     {
       "index": "SP500",
@@ -1422,12 +1388,10 @@
       "fee_annual": 0.75,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 2.004,
-      "change_pct": 0.5,
-      "amount": 403756148.0,
-      "return_1y": null,
-      "return_1y_source": "天天基金/东方财富基金页",
-      "updated_at": "2026-09-30T21:26:01+08:00"
+      "price": null,
+      "change_pct": null,
+      "amount": null,
+      "error": "HTTP Error 502: Bad Gateway"
     }
   ],
   "errors": [],
