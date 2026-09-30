@@ -28,7 +28,7 @@ def flatten_limits(raw):
  for r in rows:
   code=str(r.get('code') or '')
   if not re.fullmatch(r'\d{6}',code): continue
-  m=merged.setdefault(code,{'code':code,'name':r.get('name') or code,'agency_limit':None,'direct_limit':None,'agency_status':None,'direct_status':None,'status':r.get('decisionStatus') or r.get('status'),'fee_annual':None,'index':r.get('index'),'share_class':r.get('shareClass')})
+  m=merged.setdefault(code,{'code':code,'name':r.get('name') or code,'fund_company':r.get('fundCompany') or r.get('company') or r.get('manager'),'agency_limit':None,'direct_limit':None,'agency_status':None,'direct_status':None,'status':r.get('decisionStatus') or r.get('status'),'fee_annual':None,'index':r.get('index'),'share_class':r.get('shareClass')})
   bucket=r.get('channelBucket')
   status=r.get('decisionStatus') or r.get('status')
   amount=r.get('decisionLimitAmount')
