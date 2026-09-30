@@ -123,7 +123,7 @@ def etf_quotes():
    except Exception:pass
    return {**e,'market':market,'price':num('f43',div),'change_pct':num('f170',100),'amount':num('f48'),'return_1y':r1,'return_1y_source':'天天基金/东方财富基金页','premium_source':'qdiilimit公开汇总（T-1）','updated_at':now.isoformat(timespec='seconds')}
   except Exception as ex:return {**e,'market':market,'price':None,'change_pct':None,'amount':None,'premium_source':'qdiilimit公开汇总（T-1）','error':str(ex)}
- with ThreadPoolExecutor(max_workers=12) as ex:
+ with ThreadPoolExecutor(max_workers=4) as ex:
   for x in ex.map(one,master.values()):out.append(x)
  return out
 def previous_day():
