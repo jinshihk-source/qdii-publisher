@@ -1,0 +1,14 @@
+# ETF collector data contracts
+
+- `scripts/update.py` keeps the existing OTC catalog/summary merge and two-level UI schema.
+- `scripts/etf_collect.py` runs quote and return jobs independently in one four-worker pool. Eastmoney quote gets three attempts, 2.5-second socket timeout, 0.2/0.4-second backoff; Tencent is an independently verified live backup. A shared 50-second collection budget stops queued retries; Actions additionally limits the collector process to 60 seconds without increasing the existing job timeout.
+- Quote fields come from Eastmoney `f43 / 10**f59`, `f170 / 100`, `f48`, with `f86` as source timestamp. Tencent uses fields 3, 32, the CNY amount in field 35's price/volume/amount tuple, and field 30 timestamp. Neither source computes annual performance or premium.
+- Official fund detail HTML actually loads `https://fund.eastmoney.com/pingzhongdata/{code}.js`. `syl_1n` is one YEAR; `syl_1y` is one MONTH. Return date uses the last dated NAV entry from the same response. On primary failure the exact `阶段涨幅` row and `近1年` column of the detail page, paired with `jdzfDate`, provide a second published-data source. This was checked against the actual 513100 detail/stage pages (16.45%, 2026-09-29 on the local verification run).
+- Missing quote fields fall back independently through latest.json and descending history files, retaining original effective dates. Legacy rows without source dates stay unknown. Mixed-date fields additionally carry `quote_field_dates`. Return fallback preserves value/date/source and sets `return_1y_stale`.
+- qdiilimit remains the premium/fee source. It publishes T-1 and NAV dates, but no explicit premium trading date. `premium_effective_date` is therefore null, with `premium_published_date`, `premium_nav_date`, and a date note; no trading date or premium is invented.
+- Metadata outages retain the previous metadata universe with fallback status. Missing products, low counts (NDX100 < 10 or SP500 < 4), >20% missing prices, or all-null annual returns reject publication before modifying latest/history. Any deliberate product removal needs a reviewed baseline update.
+- The existing field named `etf` includes two LOFs. All 18 existing products are preserved: NDX100 13 (12 ETF + 1 LOF), SP500 5 (4 ETF + 1 LOF).
+- OTC company totals are per index tab, sum only finite numeric quotas, and sort descending before individual quota/share class. Company name is only a total-quota tie breaker to keep groups contiguous. PNG uses the same sorting.
+- The schedule is now every day 02:00 UTC (10:00 Asia/Shanghai); previously the repository cron was weekdays only.
+
+Validation: `python -m unittest discover -s tests -v`, `python scripts/update.py`. Local browser checks cover all four tab combinations and canvas PNG export. Live values are in data/latest.json, not test fixtures.

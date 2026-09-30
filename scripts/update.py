@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from datetime import datetime,timedelta,timezone
+from etf_collect import collect_etfs,snapshots,sort_otc,publish
 ROOT=Path(__file__).resolve().parents[1];DATA=ROOT/'data';HIST=DATA/'history';HIST.mkdir(parents=True,exist_ok=True)
 TZ=timezone(timedelta(hours=8));now=datetime.now(TZ);today=now.date().isoformat()
 UA='Mozilla/5.0 AppleWebKit/537.36 Chrome/154 Safari/537.36'
@@ -49,6 +50,16 @@ def qdiilimit_tables():
    for r in t[1:]:
     if len(r)<9 or not re.fullmatch(r'\d{6}',r[2].strip()):continue
     code=r[2].strip();etfs[code]={'index':'SP500' if '标普' in r[0] else 'NDX100','fund_company':r[1].strip(),'code':code,'name':r[3].strip(),'size_yi':pct(r[5]),'previous_amount_yi':pct(r[6]),'premium_pct':pct(r[7]),'fee_annual':pct(r[8]),'premium_source':'qdiilimit公开汇总（T-1）'}
+ # The source provides a publication date and NAV date, but not an explicit
+ # premium trading date. Keep that date unknown rather than inventing T-1.
+ published=re.search(r'场内ETF概览.*?byline[^>]*>.*?(\d{4}-\d{2}-\d{2})',h,re.S)
+ for row in re.findall(r'<tr\b[^>]*>.*?</tr>',h,re.S):
+  code=re.search(r'class="c-code">(\d{6})<',row)
+  if code and code[1] in etfs:
+   nav=re.search(r'净值(\d{4}-\d{2}-\d{2})',row)
+   etfs[code[1]].update(premium_effective_date=None,premium_nav_date=nav[1] if nav else None,
+                       premium_published_date=published[1] if published else None,
+                       premium_date_note='来源标记T-1，未披露对应交易日',metadata_status='live')
  return otc,etfs
 
 def classify(name):
@@ -94,8 +105,11 @@ def parse_one(f):
   mm=re.search(pat,s)
   if mm:company=mm.group(1).strip().lstrip('：: ').strip();break
  return {**f,'agency_limit':agency,'agency_status':status,'direct_limit':None,'direct_status':'unverified','fund_company':company,'fee_annual':None,'return_1y':r1,'source_url':'https://fund.eastmoney.com/'+f['code']+'.html','fetch_seconds':round(time.perf_counter()-t,3)}
-def fetch_otc():
- qmap,_=qdiilimit_tables();funds=discover();rows=[];errors=[]
+def fetch_otc(qmap):
+ rows=[];errors=[]
+ try:funds=discover()
+ except Exception as exc:
+  funds=list(qmap.values());errors.append({'source':'fund catalog','error':str(exc)})
  with ThreadPoolExecutor(max_workers=12) as ex:
   jobs={ex.submit(parse_one,f):f for f in funds}
   for job in as_completed(jobs):
@@ -108,24 +122,24 @@ def fetch_otc():
   q['verification']='matched' if x and str(x.get('agency_limit'))==str(q.get('agency_limit')) else ('agency-source-diff' if x else 'summary-only')
   merged.append(q)
  return merged,errors
-def etf_quotes():
- _,master=qdiilimit_tables();out=[]
- def one(e):
-  code=e['code'];market=1 if code.startswith(('5','6')) else 0
-  try:
-   d=json.loads(get(f"https://push2.eastmoney.com/api/qt/stock/get?secid={market}.{code}&fields=f43,f48,f57,f58,f170")).get('data') or {};div=1000
-   def num(k,dv=1):
-    try:return float(d.get(k))/dv
-    except:return None
-   r1=None
-   try:
-    h=get('https://fund.eastmoney.com/'+code+'.html');plain=text(h);m1=re.search(r'近1年.{0,120}?([-+]?\\d+(?:\\.\\d+)?)%',plain);r1=float(m1.group(1)) if m1 else None
-   except Exception:pass
-   return {**e,'market':market,'price':num('f43',div),'change_pct':num('f170',100),'amount':num('f48'),'return_1y':r1,'return_1y_source':'天天基金/东方财富基金页','premium_source':'qdiilimit公开汇总（T-1）','updated_at':now.isoformat(timespec='seconds')}
-  except Exception as ex:return {**e,'market':market,'price':None,'change_pct':None,'amount':None,'premium_source':'qdiilimit公开汇总（T-1）','error':str(ex)}
- with ThreadPoolExecutor(max_workers=4) as ex:
-  for x in ex.map(one,master.values()):out.append(x)
- return out
+def fetch_etf_metadata(history):
+ try:
+  qmap,master=qdiilimit_tables()
+  if not qmap or not master:raise ValueError('empty qdiilimit tables')
+  return qmap,master,[]
+ except Exception as exc:
+  if not history:raise
+  old=history[0]
+  qmap={x['code']:{**x,'quota_status':'fallback'} for x in old.get('otc',[])}
+  fields=('index','fund_company','code','name','size_yi','previous_amount_yi','premium_pct',
+          'fee_annual','premium_source','premium_effective_date','premium_nav_date',
+          'premium_published_date','premium_date_note')
+  master={x['code']:{**{k:x.get(k) for k in fields},'metadata_status':'fallback'} for x in old['etf']}
+  return qmap,master,[{'source':'qdiilimit','error':str(exc)}]
+
+def etf_quotes(master,history,deadline):
+ return collect_etfs(master,get,TableParser,history,deadline)
+
 def previous_day():
  fs=sorted(p for p in HIST.glob('*.json') if p.stem<today)
  if not fs:return {}
@@ -134,14 +148,23 @@ def previous_day():
 def comparable(v):
  return float(v) if isinstance(v,(int,float)) else v
 def main():
- started=time.perf_counter();old=previous_day();otc,errs=fetch_otc()
+ started=time.perf_counter();deadline=time.monotonic()+50;old=previous_day();history=snapshots(DATA)
+ qmap,master,metadata_errors=fetch_etf_metadata(history)
+ with ThreadPoolExecutor(max_workers=2) as pool:
+  otc_job=pool.submit(fetch_otc,qmap)
+  etf_job=pool.submit(etf_quotes,master,history,deadline)
+  otc,errs=otc_job.result();etf=etf_job.result()
+ errs.extend(metadata_errors)
+ otc=sort_otc(otc)
+ for row in etf:
+  for error in row.get('collection_errors',[]):errs.append({'code':row['code'],**error})
  for x in otc:
   p=old.get(x['code'])
   if not p:x['change']='new'
   else:
    a,b=comparable(x.get('agency_limit')),comparable(p.get('agency_limit'))
    x['change']='same' if a==b else ('changed')
- etf=etf_quotes();payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富公开场内行情'],'validation_note':'场内价格、涨跌、成交额来自东方财富公开行情；场内溢价率为qdiilimit最近已发布的T-1数据。场外代销额度由天天基金销售页交叉核对，直销/费率来自公开汇总。'}
- tmp=DATA/'latest.tmp.json';tmp.write_text(json.dumps(payload,ensure_ascii=False,indent=2),'utf-8');tmp.replace(DATA/'latest.json');(HIST/f'{today}.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),'utf-8')
+ payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留历史快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外代销额度由天天基金销售页交叉核对，直销/费率来自公开汇总。'}
+ publish(payload,DATA,history)
  print(json.dumps({'ok':True,'duration_seconds':payload['duration_seconds'],'otc':len(otc),'etf':len(etf),'errors':len(errs)},ensure_ascii=False))
 if __name__=='__main__':main()
