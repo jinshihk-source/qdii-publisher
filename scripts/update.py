@@ -93,13 +93,19 @@ def parse_one(f):
   if mm:company=mm.group(1).strip().lstrip('：: ').strip();break
  return {**f,'agency_limit':agency,'agency_status':status,'direct_limit':None,'direct_status':'unverified','fund_company':company,'fee_annual':None,'return_1y':r1,'source_url':'https://fund.eastmoney.com/'+f['code']+'.html','fetch_seconds':round(time.perf_counter()-t,3)}
 def fetch_otc():
- funds=discover();rows=[];errors=[]
+ qmap,_=qdiilimit_tables();funds=discover();rows=[];errors=[]
  with ThreadPoolExecutor(max_workers=12) as ex:
   jobs={ex.submit(parse_one,f):f for f in funds}
   for job in as_completed(jobs):
    try:rows.append(job.result())
    except Exception as e:errors.append({'code':jobs[job]['code'],'error':str(e)})
- return rows,errors
+ live={x['code']:x for x in rows};merged=[]
+ for code,q in qmap.items():
+  x=live.get(code,{})
+  q['return_1y']=x.get('return_1y');q['agency_live']=x.get('agency_limit');q['agency_status']=x.get('agency_status');q['direct_status']='published-summary';q['source_url']=x.get('source_url');q['fetch_seconds']=x.get('fetch_seconds')
+  q['verification']='matched' if x and str(x.get('agency_limit'))==str(q.get('agency_limit')) else ('agency-source-diff' if x else 'summary-only')
+  merged.append(q)
+ return merged,errors
 ETF_MASTER=[('513100','NDX100',1),('513110','NDX100',1),('159941','NDX100',0),('159501','NDX100',0),('159513','NDX100',0),('159632','NDX100',0),('513500','SP500',1),('159612','SP500',0),('513650','SP500',1)]
 def etf_one(e):
  code,idx,market=e;d=json.loads(get(f'https://push2.eastmoney.com/api/qt/stock/get?secid={market}.{code}&fields=f43,f48,f57,f58,f152,f170')).get('data') or {};dp=int(d.get('f152') or 3);div=10**dp
