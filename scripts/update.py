@@ -12,7 +12,7 @@ def run_limit_engine():
  with tempfile.TemporaryDirectory() as td:
   repo=Path(td)/'engine';subprocess.run(['git','clone','--depth','1','https://github.com/aiten2/qdii-purchase-limits.git',str(repo)],check=True)
   subprocess.run(['npm','ci','--omit=optional','--ignore-scripts'],cwd=repo,check=True)
-  p=subprocess.run(['node','scripts/query-purchase-limits.js','--json'],cwd=repo,text=True,capture_output=True,check=True)
+  p=subprocess.run(['node','scripts/query-purchase-limits.js','--json','--details'],cwd=repo,text=True,capture_output=True,check=True)
   s=p.stdout.strip();a=s.find('{');b=s.rfind('}')
   if a<0 or b<a:raise RuntimeError('额度引擎未返回 JSON')
   return json.loads(s[a:b+1])
