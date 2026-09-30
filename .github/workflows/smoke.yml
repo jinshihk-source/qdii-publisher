@@ -1,0 +1,26 @@
+name: QDII Source Smoke Test
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/smoke_test.py'
+      - '.github/workflows/smoke.yml'
+permissions:
+  contents: write
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/smoke_test.py
+      - name: Save smoke result
+        run: |
+          git config user.name "qdii-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/smoke.json
+          git diff --cached --quiet || git commit -m "test: save source smoke result"
+          git push
