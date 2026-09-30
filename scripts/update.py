@@ -17,7 +17,7 @@ def classify(name):
  if '标普500' in name or 'S&P500' in n or 'S&P 500' in n:return 'sp500'
  return None
 def share_class(name):
- s=re.sub(r'\([^)]*\)','',name);m=re.search(r'(?:人民币|美元现汇|美元现钞)?([A-Z])(?:类|$)',s,re.I);return m.group(1).upper() if m else None
+ s=re.sub(r'\([^)]*\)','',name);m=re.search(r'(?:人民币|美元现汇|美元现钞)?([A-Z])(?:人民币|类|$)',s,re.I);return m.group(1).upper() if m else None
 def discover():
  raw=get(CATALOG);m=re.search(r'(\[\[.*\]\])',raw,re.S)
  if not m:raise RuntimeError('基金目录格式无法识别')
@@ -52,7 +52,7 @@ def parse_one(f):
  company=None
  for pat in [r'基金管理人[：:]?\s*([^|]{2,24}?基金)',r'管 理 人[：:]?\s*([^|]{2,24}?基金)']:
   mm=re.search(pat,s)
-  if mm:company=mm.group(1).strip();break
+  if mm:company=mm.group(1).strip().lstrip('：: ').strip();break
  return {**f,'agency_limit':agency,'agency_status':status,'direct_limit':None,'direct_status':'unverified','fund_company':company,'fee_annual':None,'return_1y':r1,'source_url':'https://fund.eastmoney.com/'+f['code']+'.html','fetch_seconds':round(time.perf_counter()-t,3)}
 def fetch_otc():
  funds=discover();rows=[];errors=[]
