@@ -1,7 +1,7 @@
 {
   "date": "2026-09-30",
-  "updated_at": "2026-09-30T20:33:56+08:00",
-  "duration_seconds": 6.81,
+  "updated_at": "2026-09-30T20:41:09+08:00",
+  "duration_seconds": 8.96,
   "otc": [
     {
       "index": "nasdaq100",
@@ -19,7 +19,7 @@
       "agency_status": "unavailable",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/021000.html",
-      "fetch_seconds": 0.113,
+      "fetch_seconds": 0.437,
       "verification": "agency-source-diff",
       "change": "new"
     },
@@ -39,7 +39,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019441.html",
-      "fetch_seconds": 0.068,
+      "fetch_seconds": 0.489,
       "verification": "matched",
       "change": "new"
     },
@@ -59,7 +59,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019442.html",
-      "fetch_seconds": 0.064,
+      "fetch_seconds": 0.276,
       "verification": "matched",
       "change": "new"
     },
@@ -79,7 +79,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/000834.html",
-      "fetch_seconds": 0.369,
+      "fetch_seconds": 0.142,
       "verification": "matched",
       "change": "new"
     },
@@ -99,7 +99,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/008971.html",
-      "fetch_seconds": 0.058,
+      "fetch_seconds": 0.312,
       "verification": "matched",
       "change": "new"
     },
@@ -119,7 +119,7 @@
       "agency_status": "unavailable",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/022525.html",
-      "fetch_seconds": 0.059,
+      "fetch_seconds": 0.344,
       "verification": "agency-source-diff",
       "change": "new"
     },
@@ -139,7 +139,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/539001.html",
-      "fetch_seconds": 0.242,
+      "fetch_seconds": 0.505,
       "verification": "matched",
       "change": "new"
     },
@@ -159,7 +159,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/012752.html",
-      "fetch_seconds": 0.074,
+      "fetch_seconds": 0.322,
       "verification": "matched",
       "change": "new"
     },
@@ -179,7 +179,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016452.html",
-      "fetch_seconds": 0.072,
+      "fetch_seconds": 0.264,
       "verification": "matched",
       "change": "new"
     },
@@ -199,7 +199,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016453.html",
-      "fetch_seconds": 0.351,
+      "fetch_seconds": 0.286,
       "verification": "matched",
       "change": "new"
     },
@@ -214,12 +214,12 @@
       "tracking_error": 1.71,
       "quota_note": "代销 2026-09-24 直销 2026-09-24",
       "share_class": "A",
-      "return_1y": 15.44,
+      "return_1y": 15.31,
       "agency_live": 10.0,
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019736.html",
-      "fetch_seconds": 0.056,
+      "fetch_seconds": 0.496,
       "verification": "matched",
       "change": "new"
     },
@@ -234,12 +234,12 @@
       "tracking_error": 1.71,
       "quota_note": "代销 2026-09-24 直销 2026-09-24",
       "share_class": "C",
-      "return_1y": 15.17,
+      "return_1y": 15.03,
       "agency_live": 10.0,
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019737.html",
-      "fetch_seconds": 0.062,
+      "fetch_seconds": 0.589,
       "verification": "matched",
       "change": "new"
     },
@@ -259,7 +259,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/023422.html",
-      "fetch_seconds": 0.36,
+      "fetch_seconds": 0.577,
       "verification": "matched",
       "change": "new"
     },
@@ -279,7 +279,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019547.html",
-      "fetch_seconds": 0.375,
+      "fetch_seconds": 0.285,
       "verification": "matched",
       "change": "new"
     },
@@ -299,7 +299,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019548.html",
-      "fetch_seconds": 0.068,
+      "fetch_seconds": 0.18,
       "verification": "matched",
       "change": "new"
     },
@@ -319,7 +319,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019172.html",
-      "fetch_seconds": 0.34,
+      "fetch_seconds": 0.429,
       "verification": "matched",
       "change": "new"
     },
@@ -339,7 +339,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019173.html",
-      "fetch_seconds": 0.366,
+      "fetch_seconds": 0.505,
       "verification": "matched",
       "change": "new"
     },
@@ -359,7 +359,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/040046.html",
-      "fetch_seconds": 0.357,
+      "fetch_seconds": 0.354,
       "verification": "matched",
       "change": "new"
     },
@@ -379,7 +379,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/014978.html",
-      "fetch_seconds": 0.343,
+      "fetch_seconds": 0.246,
       "verification": "matched",
       "change": "new"
     },
@@ -399,7 +399,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019524.html",
-      "fetch_seconds": 0.355,
+      "fetch_seconds": 0.325,
       "verification": "matched",
       "change": "new"
     },
@@ -419,7 +419,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019525.html",
-      "fetch_seconds": 0.345,
+      "fetch_seconds": 0.253,
       "verification": "matched",
       "change": "new"
     },
@@ -439,7 +439,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/022664.html",
-      "fetch_seconds": 0.345,
+      "fetch_seconds": 0.281,
       "verification": "matched",
       "change": "new"
     },
@@ -459,7 +459,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/015299.html",
-      "fetch_seconds": 0.065,
+      "fetch_seconds": 0.275,
       "verification": "matched",
       "change": "new"
     },
@@ -479,7 +479,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/015300.html",
-      "fetch_seconds": 0.377,
+      "fetch_seconds": 0.458,
       "verification": "matched",
       "change": "new"
     },
@@ -499,7 +499,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016055.html",
-      "fetch_seconds": 0.385,
+      "fetch_seconds": 0.348,
       "verification": "matched",
       "change": "new"
     },
@@ -519,7 +519,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016057.html",
-      "fetch_seconds": 0.206,
+      "fetch_seconds": 0.369,
       "verification": "matched",
       "change": "new"
     },
@@ -539,7 +539,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/024237.html",
-      "fetch_seconds": 0.348,
+      "fetch_seconds": 0.174,
       "verification": "matched",
       "change": "new"
     },
@@ -559,7 +559,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016532.html",
-      "fetch_seconds": 0.374,
+      "fetch_seconds": 0.355,
       "verification": "matched",
       "change": "new"
     },
@@ -579,7 +579,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/016533.html",
-      "fetch_seconds": 0.419,
+      "fetch_seconds": 0.142,
       "verification": "matched",
       "change": "new"
     },
@@ -599,7 +599,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/021838.html",
-      "fetch_seconds": 0.344,
+      "fetch_seconds": 0.359,
       "verification": "matched",
       "change": "new"
     },
@@ -614,12 +614,12 @@
       "tracking_error": 1.11,
       "quota_note": "代销 2026-09-22 直销 2026-09-22",
       "share_class": null,
-      "return_1y": 16.92,
+      "return_1y": 16.74,
       "agency_live": "暂停",
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/160213.html",
-      "fetch_seconds": 0.361,
+      "fetch_seconds": 0.332,
       "verification": "matched",
       "change": "new"
     },
@@ -639,7 +639,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018043.html",
-      "fetch_seconds": 0.127,
+      "fetch_seconds": 2.105,
       "verification": "matched",
       "change": "new"
     },
@@ -659,7 +659,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018044.html",
-      "fetch_seconds": 0.124,
+      "fetch_seconds": 0.262,
       "verification": "matched",
       "change": "new"
     },
@@ -699,7 +699,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/270042.html",
-      "fetch_seconds": 0.364,
+      "fetch_seconds": 0.306,
       "verification": "matched",
       "change": "new"
     },
@@ -719,7 +719,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/006479.html",
-      "fetch_seconds": 0.329,
+      "fetch_seconds": 0.326,
       "verification": "matched",
       "change": "new"
     },
@@ -739,7 +739,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/161130.html",
-      "fetch_seconds": 0.052,
+      "fetch_seconds": 0.577,
       "verification": "matched",
       "change": "new"
     },
@@ -759,7 +759,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/012870.html",
-      "fetch_seconds": 0.06,
+      "fetch_seconds": 0.23,
       "verification": "matched",
       "change": "new"
     },
@@ -779,7 +779,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018966.html",
-      "fetch_seconds": 0.054,
+      "fetch_seconds": 0.229,
       "verification": "matched",
       "change": "new"
     },
@@ -799,7 +799,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018967.html",
-      "fetch_seconds": 0.341,
+      "fetch_seconds": 0.296,
       "verification": "matched",
       "change": "new"
     },
@@ -819,7 +819,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/021773.html",
-      "fetch_seconds": 0.063,
+      "fetch_seconds": 0.501,
       "verification": "matched",
       "change": "new"
     },
@@ -839,7 +839,7 @@
       "agency_status": "unavailable",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/022523.html",
-      "fetch_seconds": 0.053,
+      "fetch_seconds": 0.417,
       "verification": "agency-source-diff",
       "change": "new"
     },
@@ -859,7 +859,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/017641.html",
-      "fetch_seconds": 1.087,
+      "fetch_seconds": 0.332,
       "verification": "matched",
       "change": "new"
     },
@@ -879,7 +879,7 @@
       "agency_status": "limited",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/019305.html",
-      "fetch_seconds": 0.377,
+      "fetch_seconds": 0.306,
       "verification": "matched",
       "change": "new"
     },
@@ -899,7 +899,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018064.html",
-      "fetch_seconds": 0.107,
+      "fetch_seconds": 0.332,
       "verification": "matched",
       "change": "new"
     },
@@ -919,7 +919,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018065.html",
-      "fetch_seconds": 0.1,
+      "fetch_seconds": 0.319,
       "verification": "matched",
       "change": "new"
     },
@@ -939,7 +939,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/050025.html",
-      "fetch_seconds": 0.357,
+      "fetch_seconds": 0.395,
       "verification": "matched",
       "change": "new"
     },
@@ -959,7 +959,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/006075.html",
-      "fetch_seconds": 0.123,
+      "fetch_seconds": 0.329,
       "verification": "matched",
       "change": "new"
     },
@@ -979,7 +979,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/018738.html",
-      "fetch_seconds": 0.364,
+      "fetch_seconds": 0.304,
       "verification": "matched",
       "change": "new"
     },
@@ -999,7 +999,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/017028.html",
-      "fetch_seconds": 0.072,
+      "fetch_seconds": 0.294,
       "verification": "matched",
       "change": "new"
     },
@@ -1019,7 +1019,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/017030.html",
-      "fetch_seconds": 0.052,
+      "fetch_seconds": 0.19,
       "verification": "matched",
       "change": "new"
     },
@@ -1039,7 +1039,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/007721.html",
-      "fetch_seconds": 0.065,
+      "fetch_seconds": 0.25,
       "verification": "matched",
       "change": "new"
     },
@@ -1059,7 +1059,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/007722.html",
-      "fetch_seconds": 0.35,
+      "fetch_seconds": 0.158,
       "verification": "matched",
       "change": "new"
     },
@@ -1079,7 +1079,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/161125.html",
-      "fetch_seconds": 0.367,
+      "fetch_seconds": 0.37,
       "verification": "matched",
       "change": "new"
     },
@@ -1099,7 +1099,7 @@
       "agency_status": "suspended",
       "direct_status": "published-summary",
       "source_url": "https://fund.eastmoney.com/012860.html",
-      "fetch_seconds": 0.069,
+      "fetch_seconds": 0.328,
       "verification": "matched",
       "change": "new"
     }
@@ -1116,10 +1116,10 @@
       "fee_annual": 0.8,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 23.52,
+      "price": 2.352,
       "change_pct": 1.2,
       "amount": 597044697.0,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1132,10 +1132,10 @@
       "fee_annual": 1.0,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 17.35,
+      "price": 1.735,
       "change_pct": 1.58,
       "amount": 1323268037.276,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1148,10 +1148,10 @@
       "fee_annual": 0.6,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 47.96,
+      "price": 4.796,
       "change_pct": 1.46,
       "amount": 30312340.296,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1164,10 +1164,10 @@
       "fee_annual": 0.8,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 28.18,
+      "price": 2.818,
       "change_pct": 1.4,
       "amount": 509169013.0,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1180,10 +1180,10 @@
       "fee_annual": 0.8,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 25.66,
+      "price": 2.566,
       "change_pct": 1.34,
       "amount": 371533083.166,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1196,10 +1196,10 @@
       "fee_annual": 1.0,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 25.9,
+      "price": 2.59,
       "change_pct": 1.33,
       "amount": 252126624.0,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1212,10 +1212,10 @@
       "fee_annual": 0.65,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 24.76,
+      "price": 2.476,
       "change_pct": 1.64,
       "amount": 179522385.846,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1228,10 +1228,10 @@
       "fee_annual": 0.65,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 24.55,
+      "price": 2.455,
       "change_pct": 1.32,
       "amount": 265737365.617,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1244,10 +1244,10 @@
       "fee_annual": 0.65,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 25.24,
+      "price": 2.524,
       "change_pct": 0.84,
       "amount": 208808148.0,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1260,10 +1260,10 @@
       "fee_annual": 0.6,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 22.05,
+      "price": 2.205,
       "change_pct": -1.39,
       "amount": 835292458.79,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1276,10 +1276,10 @@
       "fee_annual": 1.0,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 18.79,
+      "price": 1.879,
       "change_pct": 1.51,
       "amount": 368276912.684,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1292,10 +1292,10 @@
       "fee_annual": 0.6,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 21.24,
+      "price": 2.124,
       "change_pct": 1.58,
       "amount": 113467808.71,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "NDX100",
@@ -1308,10 +1308,10 @@
       "fee_annual": 0.6,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 21.54,
+      "price": 2.154,
       "change_pct": 1.27,
       "amount": 211391796.0,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "SP500",
@@ -1324,10 +1324,10 @@
       "fee_annual": 0.8,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 26.88,
+      "price": 2.688,
       "change_pct": -0.07,
       "amount": 268249988.0,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "SP500",
@@ -1340,10 +1340,10 @@
       "fee_annual": 1.0,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 32.75,
+      "price": 3.275,
       "change_pct": 1.08,
       "amount": 18680011.104,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "SP500",
@@ -1356,10 +1356,10 @@
       "fee_annual": 0.75,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 20.76,
+      "price": 2.076,
       "change_pct": 0.24,
       "amount": 30283380.0,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "SP500",
@@ -1372,10 +1372,10 @@
       "fee_annual": 0.75,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 0,
-      "price": 20.13,
+      "price": 2.013,
       "change_pct": 0.5,
       "amount": 134037387.076,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     },
     {
       "index": "SP500",
@@ -1388,10 +1388,10 @@
       "fee_annual": 0.75,
       "premium_source": "qdiilimit公开汇总（T-1）",
       "market": 1,
-      "price": 20.04,
+      "price": 2.004,
       "change_pct": 0.5,
       "amount": 403756148.0,
-      "updated_at": "2026-09-30T20:33:56+08:00"
+      "updated_at": "2026-09-30T20:41:09+08:00"
     }
   ],
   "errors": [],
