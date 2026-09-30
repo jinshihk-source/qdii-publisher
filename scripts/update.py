@@ -17,22 +17,32 @@ def run_limit_engine():
   if a<0 or b<a:raise RuntimeError('额度引擎未返回 JSON')
   return json.loads(s[a:b+1])
 def flatten_limits(raw):
- out=[]
- def walk(x,ctx=''):
-  if isinstance(x,dict):
-   code=str(x.get('code') or x.get('fund_code') or x.get('fundCode') or '');name=x.get('name') or x.get('fund_name') or x.get('fundName')
-   if re.fullmatch(r'\d{6}',code) and name:
-    out.append({'code':code,'name':str(name),'limit':x.get('max_buy',x.get('limit',x.get('maxPurchase'))),'status':x.get('status'),'channel':str(x.get('channel') or ctx).lower(),'fee_annual':x.get('fee_annual'),'index':x.get('index'),'share_class':x.get('share_class')})
-   for k,v in x.items():walk(v,str(k))
-  elif isinstance(x,list):
-   for v in x:walk(v,ctx)
- walk(raw);merged={}
- for r in out:
-  k=r['code'];m=merged.setdefault(k,{'code':k,'name':r['name'],'agency_limit':None,'direct_limit':None,'status':r['status'],'fee_annual':r['fee_annual'],'index':r['index'],'share_class':r['share_class']})
-  if any(w in r['channel'] for w in ['direct','official','直销']):m['direct_limit']=r['limit']
-  else:m['agency_limit']=r['limit']
-  for f in ['fee_annual','index','share_class','status']:
-   if m.get(f) is None and r.get(f) is not None:m[f]=r[f]
+ rows=raw.get('rows') or []
+ direct_evidence=raw.get('officialChannelEvidence') or []
+ merged={}
+ def state_value(status, amount):
+  if status=='suspended': return '暂停'
+  if status=='unavailable': return '不可申购'
+  if status=='open': return '开放'
+  return amount if isinstance(amount,(int,float)) else None
+ for r in rows:
+  code=str(r.get('code') or '')
+  if not re.fullmatch(r'\d{6}',code): continue
+  m=merged.setdefault(code,{'code':code,'name':r.get('name') or code,'agency_limit':None,'direct_limit':None,'agency_status':None,'direct_status':None,'status':r.get('decisionStatus') or r.get('status'),'fee_annual':None,'index':r.get('index'),'share_class':r.get('shareClass')})
+  bucket=r.get('channelBucket')
+  status=r.get('decisionStatus') or r.get('status')
+  amount=r.get('decisionLimitAmount')
+  if amount is None: amount=r.get('limitAmount')
+  if bucket=='fund-manager-direct':
+   m['direct_status']=status;m['direct_limit']=state_value(status,amount)
+  else:
+   m['agency_status']=status;m['agency_limit']=state_value(status,amount)
+ for r in direct_evidence:
+  code=str(r.get('code') or '')
+  if code not in merged: continue
+  amount=r.get('amount')
+  if isinstance(amount,(int,float)):
+   merged[code]['direct_limit']=amount;merged[code]['direct_status']='limited'
  return list(merged.values())
 def returns_1y():
  end=now.date();start=end-timedelta(days=370);q={'op':'ph','dt':'kf','ft':'qdii','rs':'','gs':'0','sc':'1nzf','st':'desc','sd':start.isoformat(),'ed':end.isoformat(),'qdii':'','tabSubtype':',,,,,','pi':'1','pn':'1000','dx':'1','v':'0.77'}
