@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import json,re,time,urllib.parse,urllib.request\nfrom html.parser import HTMLParser
+import json,re,time,urllib.parse,urllib.request
+from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from datetime import datetime,timedelta,timezone
@@ -49,7 +50,8 @@ def qdiilimit_tables():
     if len(r)<9 or not re.fullmatch(r'\d{6}',r[2].strip()):continue
     code=r[2].strip();etfs[code]={'index':'SP500' if '标普' in r[0] else 'NDX100','fund_company':r[1].strip(),'code':code,'name':r[3].strip(),'size_yi':pct(r[5]),'previous_amount_yi':pct(r[6]),'premium_pct':pct(r[7]),'fee_annual':pct(r[8]),'premium_source':'qdiilimit公开汇总（T-1）'}
  return otc,etfs
-\ndef classify(name):
+
+def classify(name):
  n=name.upper()
  if '纳斯达克100' in name or 'NASDAQ100' in n or 'NASDAQ 100' in n:return 'nasdaq100'
  if '标普500' in name or 'S&P500' in n or 'S&P 500' in n:return 'sp500'
