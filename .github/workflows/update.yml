@@ -1,6 +1,10 @@
 name: Update QDII Publisher
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/update.py'
+      - '.github/workflows/update.yml'
   schedule:
     - cron: '30 23 * * 0-4'
 permissions:
