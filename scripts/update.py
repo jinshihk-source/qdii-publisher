@@ -106,15 +106,20 @@ def fetch_otc():
   q['verification']='matched' if x and str(x.get('agency_limit'))==str(q.get('agency_limit')) else ('agency-source-diff' if x else 'summary-only')
   merged.append(q)
  return merged,errors
-ETF_MASTER=[('513100','NDX100',1),('513110','NDX100',1),('159941','NDX100',0),('159501','NDX100',0),('159513','NDX100',0),('159632','NDX100',0),('513500','SP500',1),('159612','SP500',0),('513650','SP500',1)]
-def etf_one(e):
- code,idx,market=e;d=json.loads(get(f'https://push2.eastmoney.com/api/qt/stock/get?secid={market}.{code}&fields=f43,f48,f57,f58,f152,f170')).get('data') or {};dp=int(d.get('f152') or 3);div=10**dp
- def n(k,dv=1):
-  try:return float(d.get(k))/dv
-  except:return None
- return {'code':code,'index':idx,'market':market,'name':d.get('f58') or code,'price':n('f43',div),'change_pct':n('f170',100),'amount':n('f48'),'premium_pct':None,'premium_source':'待接入可靠IOPV/官方折溢价源','updated_at':now.isoformat(timespec='seconds')}
 def etf_quotes():
- with ThreadPoolExecutor(max_workers=9) as ex:return list(ex.map(etf_one,ETF_MASTER))
+ _,master=qdiilimit_tables();out=[]
+ def one(e):
+  code=e['code'];market=1 if code.startswith(('5','6')) else 0
+  try:
+   d=json.loads(get(f"https://push2.eastmoney.com/api/qt/stock/get?secid={market}.{code}&fields=f43,f48,f57,f58,f152,f170")).get('data') or {};dp=int(d.get('f152') or 3);div=10**dp
+   def num(k,dv=1):
+    try:return float(d.get(k))/dv
+    except:return None
+   return {**e,'market':market,'price':num('f43',div),'change_pct':num('f170',100),'amount':num('f48'),'updated_at':now.isoformat(timespec='seconds')}
+  except Exception as ex:return {**e,'market':market,'price':None,'change_pct':None,'amount':None,'error':str(ex)}
+ with ThreadPoolExecutor(max_workers=12) as ex:
+  for x in ex.map(one,master.values()):out.append(x)
+ return out
 def previous_day():
  fs=sorted(p for p in HIST.glob('*.json') if p.stem<today)
  if not fs:return {}
@@ -130,8 +135,7 @@ def main():
   else:
    a,b=comparable(x.get('agency_limit')),comparable(p.get('agency_limit'))
    x['change']='same' if a==b else ('changed')
- # 直销额度不再伪造：轻量主链路暂标 unverified，后续接第二可靠源
- etf=etf_quotes();payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','东方财富公开场内行情'],'validation_note':'直销额度尚未接入第二可靠源，当前不展示为已验证数据'}
+etf=etf_quotes();payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（额度/费率/T-1溢价）','东方财富公开场内行情'],'validation_note':'代销额度由天天基金销售页交叉核对；直销/费率/T-1溢价来自公开汇总，实际交易以基金公司及销售渠道为准'}
  tmp=DATA/'latest.tmp.json';tmp.write_text(json.dumps(payload,ensure_ascii=False,indent=2),'utf-8');tmp.replace(DATA/'latest.json');(HIST/f'{today}.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),'utf-8')
  print(json.dumps({'ok':True,'duration_seconds':payload['duration_seconds'],'otc':len(otc),'etf':len(etf),'errors':len(errs)},ensure_ascii=False))
 if __name__=='__main__':main()
