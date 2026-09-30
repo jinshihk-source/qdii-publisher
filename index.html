@@ -1,7 +1,345 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QDII 发布工作台</title><style>
-:root{--bg:#f5f7fb;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--green:#059669;--red:#dc2626;--amber:#d97706}*{box-sizing:border-box}body{margin:0;font:14px/1.5 Inter,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink)}.wrap{max-width:1320px;margin:auto;padding:26px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.brand{font-size:25px;font-weight:800}.sub{color:var(--muted)}button{border:0;border-radius:10px;padding:10px 15px;font-weight:700;cursor:pointer}.primary{background:var(--ink);color:white}.ghost{background:white;border:1px solid var(--line)}.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}.metric{font-size:28px;font-weight:800;margin-top:8px}.ok{color:var(--green)}.grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:16px}.panel h2{margin:0 0 14px;font-size:17px}.indexnav{display:flex;gap:10px;margin-bottom:16px;padding:6px;background:#eef1f5;border-radius:14px;width:max-content}.indexnav button{font-size:16px;padding:11px 22px;background:transparent}.indexnav button.active{background:#fff;color:#111827;box-shadow:0 1px 4px #0001}.tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid var(--line);padding-bottom:10px}.tabs button{background:transparent;color:var(--muted)}.tabs button.active{background:#111827;color:#fff}.sectiontitle{font-size:22px;font-weight:800;margin:4px 0 14px}.countpill{font-size:12px;color:var(--muted);font-weight:500;margin-left:8px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:12px}.chg-up{color:var(--green);font-weight:700}.chg-down{color:var(--red);font-weight:700}.publish{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pub{border:1px solid var(--line);border-radius:14px;padding:16px}.pub b{display:block;font-size:16px;margin-bottom:6px}.foot{margin-top:18px;color:var(--muted);font-size:12px}.err{padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412;margin-bottom:8px}@media(max-width:900px){.cards{grid-template-columns:1fr 1fr}.grid,.publish{grid-template-columns:1fr}.wrap{padding:14px}}
-</style><link rel="stylesheet" href="assets/publisher.css"></head><body><div class="wrap"><div class="top"><div><div class="brand">QDII DAILY · 发布工作台</div><div class="sub" id="stamp">正在读取数据…</div></div><div><button class="ghost" onclick="location.reload()">刷新数据</button> <button class="primary" onclick="generateAll()">生成今日发布图</button></div></div>
-<div class="cards"><div class="card"><div class="sub">场外基金</div><div class="metric" id="otcN">—</div></div><div class="card"><div class="sub">场内 ETF</div><div class="metric" id="etfN">—</div></div><div class="card"><div class="sub">今日额度变化</div><div class="metric" id="chgN">—</div></div><div class="card"><div class="sub">待核验</div><div class="metric" id="errN">—</div></div><div class="card"><div class="sub">发布页数</div><div class="metric" id="pageN">—</div></div></div>
-<div class="grid"><div class="panel"><div class="indexnav"><button id="idxNasdaq" class="active" onclick="selectIndex('nasdaq100',this)">纳斯达克100</button><button id="idxSp" onclick="selectIndex('sp500',this)">标普500</button></div><div class="sectionbar"><div class="sectiontitle" id="sectionTitle">纳斯达克100</div><button class="ghost" onclick="previewCurrent()">生成当前图组 ↗</button></div><div class="tabs"><button id="tabOtc" class="active" onclick="selectType('otc',this)">场外基金 <span class="countpill" id="otcIndexN"></span></button><button id="tabEtf" onclick="selectType('etf',this)">场内 ETF <span class="countpill" id="etfIndexN"></span></button></div><div style="overflow:auto"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div></div><div><div class="panel"><h2>数据健康</h2><div id="errors"></div><div class="sub">采集失败时不允许空数据覆盖有效快照，发布前优先检查这里。</div></div><div class="panel publish-studio" style="margin-top:16px"><div class="studio-tag">CONTENT STUDIO / 图文工作台</div><h2>把今日额度<br>变成一组好看的图。</h2><p class="studio-copy">适合小红书的 3:4 图文卡片。<br>按内容长度自动分页，预览后整组保存。</p><button class="studio-primary" onclick="previewNasdaq()">纳斯达克场外 · 生成图组 ↗</button><div class="studio-actions"><button class="ghost" onclick="previewCurrent()">生成当前分类</button><button class="ghost" onclick="generateAll()">全部分类</button></div><div class="studio-note"><span>1080 × 1440 高清 PNG</span><span>每天 10:00 更新</span></div></div></div></div><div class="foot">公开数据整理，不构成投资建议。最终申购状态以实际销售渠道及基金公司公告为准。</div></div>
-<dialog id="exportDialog" class="export-dialog" aria-labelledby="exportTitle"><div class="export-toolbar"><div><h2 id="exportTitle">今日发布图组</h2><div class="sub" id="exportCount"></div></div><div class="export-buttons"><button class="primary" id="downloadExport" onclick="downloadExport()">下载整组图片（ZIP）</button><button class="ghost" onclick="document.getElementById('exportDialog').close()" aria-label="关闭图组预览">关闭</button></div></div><div class="export-grid" id="exportGrid"></div><p class="export-tip">解压后按文件名顺序发布；也可以在每张预览下单独下载 PNG。完整保留基金名称与代码。</p></dialog><script src="assets/publisher.js?v=20260930-2228"></script><script>
-let D={otc:[],etf:[],errors:[]},currentIndex='nasdaq100',currentType='otc';const $=id=>document.getElementById(id),fmt=v=>v==null||v===''?'—':v,money=v=>v==null?'—':(typeof v==='number'?'¥'+v:fmt(v));async function boot(){try{D=await(await fetch('data/latest.json?'+Date.now())).json()}catch(e){D.errors=['无法读取最新数据。']}render()}function idx(v,n=''){return /SP|标普/i.test((v||'')+n)?'标普500':'纳指100'}function chg(v){return v==='up'?'↑ 放宽':v==='down'?'↓ 收紧':v==='new'?'新增':'—'}function render(){$('stamp').textContent=`数据日期 ${D.date||'—'} · 更新 ${D.updated_at||'—'}`;$('otcN').textContent=D.otc.length;$('etfN').textContent=D.etf.length;$('chgN').textContent=D.otc.filter(x=>x.change&&x.change!=='same'&&x.change!=='new').length;$('errN').textContent=(D.errors||[]).length;$('pageN').textContent=pages().length;$('errors').innerHTML=(D.errors||[]).length?D.errors.map(x=>`<div class=err>⚠ ${typeof x==='string'?x:[x.code,x.source,x.error].filter(Boolean).join(' · ')}</div>`).join(''):'<div class="ok">● 当前无采集错误</div>';updateIndexView()}function companyKey(n){let s=String(n||'').replace(/基金|纳斯达克.*|标普.*|NASDAQ.*|S&P.*/ig,'').trim();let m=s.match(/^([\u4e00-\u9fa5]{2,6})/);return m?m[1]:s}function shareClass(n){let s=String(n||'').toUpperCase();let m=s.match(/(?:人民币)?([A-Z])(?:类|$|[\s（(])/);return m?m[1]:'Z'}function quotaNum(v){return typeof v==='number'&&isFinite(v)?v:0}function fundSort(rows){let totals={};rows.forEach(x=>{let c=String(x.fund_company||companyKey(x.name));totals[c]=(totals[c]||0)+quotaNum(x.agency_limit)+quotaNum(x.direct_limit)});return rows.slice().sort((a,b)=>{let ca=String(a.fund_company||companyKey(a.name)),cb=String(b.fund_company||companyKey(b.name));let d=(b.company_total_quota??totals[cb]??0)-(a.company_total_quota??totals[ca]??0);if(d)return d;let c=ca.localeCompare(cb,'zh-CN');if(c)return c;let q=(quotaNum(b.agency_limit)+quotaNum(b.direct_limit))-(quotaNum(a.agency_limit)+quotaNum(a.direct_limit));if(q)return q;let sc=String(a.share_class||shareClass(a.name)).localeCompare(String(b.share_class||shareClass(b.name)));if(sc)return sc;return String(a.name||'').localeCompare(String(b.name||''),'zh-CN')})}function normIndex(x){return String(x||'').toLowerCase().includes('sp')?'sp500':'nasdaq100'}function selectIndex(k,btn){currentIndex=k;document.querySelectorAll('.indexnav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');updateIndexView()}function selectType(t,btn){currentType=t;document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');updateIndexView()}function updateIndexView(){$('sectionTitle').textContent=currentIndex==='nasdaq100'?'纳斯达克100':'标普500';$('otcIndexN').textContent=D.otc.filter(x=>normIndex(x.index)===currentIndex).length+'只';$('etfIndexN').textContent=D.etf.filter(x=>normIndex(x.index)===currentIndex).length+'只';show(currentType,currentIndex)}function show(type,indexKey){if(type==='otc'){$('thead').innerHTML='<tr><th>基金</th><th>代码</th><th>代销</th><th>直销</th><th>较昨日</th><th>年费率</th><th>近1年</th></tr>';let rows=D.otc.filter(x=>normIndex(x.index)===indexKey);let sorted=fundSort(rows);$('tbody').innerHTML=sorted.map(x=>`<tr><td>${x.name}</td><td>${x.code}</td><td>${money(x.agency_limit)}</td><td>${money(x.direct_limit)}</td><td class="${x.change==='up'?'chg-up':x.change==='down'?'chg-down':''}">${chg(x.change)}</td><td>${x.fee_annual==null?'—':x.fee_annual+'%'}</td><td>${x.return_1y==null?'—':(x.return_1y>=0?'+':'')+Number(x.return_1y).toFixed(2)+'%'}</td></tr>`).join('')}else{$('thead').innerHTML='<tr><th>ETF</th><th>代码</th><th>价格</th><th>涨跌幅</th><th>T-1溢价率</th><th>成交额</th><th>年费率</th><th>近1年</th></tr>';$('tbody').innerHTML=D.etf.filter(x=>normIndex(x.index)===indexKey).map(x=>`<tr><td>${x.name}</td><td>${x.code}</td><td>${x.price==null?'—':Number(x.price).toFixed(3)}</td><td>${x.change_pct==null?'—':Number(x.change_pct).toFixed(2)+'%'}</td><td>${x.premium_pct==null?'—':Number(x.premium_pct).toFixed(2)+'%'}</td><td>${x.amount==null?'—':(x.amount/1e8).toFixed(2)+'亿'}</td><td>${x.fee_annual==null?'—':Number(x.fee_annual).toFixed(2)+'%'}</td><td>${x.return_1y==null?'—':(x.return_1y>=0?'+':'')+Number(x.return_1y).toFixed(2)+'%'}</td></tr>`).join('')}}function pages(){let out=[];for(const type of ['otc','etf'])for(const index of ['纳指100','标普500']){let rows=D[type].filter(x=>idx(x.index,x.name)===index);if(type==='otc'){out.push(...socialPages(rows,index));continue;}for(let i=0;i<rows.length;i+=15)out.push({type,index,rows:rows.slice(i,i+15),part:Math.floor(i/15)+1,total:Math.ceil(rows.length/15),count:rows.length})}return out}function drawPage(p){if(p.type==='otc')return drawSocialOTC(p);return drawSocialETF(p)}async function generateAll(){await document.fonts.ready;openExport(pages());}boot();</script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QDII 发布工作台 (小红书优化版)</title>
+<style>
+/* 核心工作台 UI（保持基本功能，调整配色使其更现代） */
+:root{--bg:#f5f7fb;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--green:#059669;--red:#dc2626;--amber:#d97706}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.5 Inter,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1320px;margin:auto;padding:26px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.brand{font-size:25px;font-weight:800}
+.sub{color:var(--muted)}
+button{border:0;border-radius:10px;padding:10px 15px;font-weight:700;cursor:pointer}
+.primary{background:var(--ink);color:white}
+.ghost{background:white;border:1px solid var(--line)}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.metric{font-size:28px;font-weight:800;margin-top:8px}
+.ok{color:var(--green)}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:16px}
+.panel h2{margin:0 0 14px;font-size:17px}
+.indexnav{display:flex;gap:10px;margin-bottom:16px;padding:6px;background:#eef1f5;border-radius:14px;width:max-content}
+.indexnav button{font-size:16px;padding:11px 22px;background:transparent}
+.indexnav button.active{background:#fff;color:#111827;box-shadow:0 1px 4px #0001}
+.tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.tabs button{background:transparent;color:var(--muted)}
+.tabs button.active{background:#111827;color:#fff}
+.sectiontitle{font-size:22px;font-weight:800;margin:4px 0 14px}
+.countpill{font-size:12px;color:var(--muted);font-weight:500;margin-left:8px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-size:12px}
+.chg-up{color:var(--green);font-weight:700}
+.chg-down{color:var(--red);font-weight:700}
+.publish{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pub{border:1px solid var(--line);border-radius:14px;padding:16px}
+.pub b{display:block;font-size:16px;margin-bottom:6px}
+.foot{margin-top:18px;color:var(--muted);font-size:12px}
+.err{padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412;margin-bottom:8px}
+@media(max-width:900px){.cards{grid-template-columns:1fr 1fr}.grid,.publish{grid-template-columns:1fr}.wrap{padding:14px}}
+
+/* --- 小红书专属海报样式 --- */
+.xhs-dialog {
+    padding: 0;
+    border: none;
+    border-radius: 20px;
+    background: transparent;
+    max-width: 90vw;
+    max-height: 95vh;
+}
+.xhs-dialog::backdrop { background: rgba(0,0,0,0.7); }
+.xhs-dialog-content { display: flex; flex-direction: column; height: 100%; background: #f5f7fb; }
+.xhs-toolbar { display: flex; justify-content: space-between; padding: 20px; background: white; border-bottom: 1px solid var(--line); align-items: center; }
+.xhs-scroll-area { overflow-y: auto; padding: 40px; display: flex; justify-content: center; background: #eef1f5;}
+
+/* 海报容器：3:4 比例，小红书最爱 */
+.xhs-poster {
+    width: 1080px; /* 固定高分辨率宽度，方便截图 */
+    height: 1440px; 
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); /* 渐变背景 */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 60px;
+    border-radius: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    transform-origin: top center;
+    /* 缩放以适应屏幕，但真实截图时需要原始尺寸 */
+    transform: scale(0.6); 
+    margin-bottom: -576px; /* 补偿缩放后的高度空隙 */
+}
+
+.xhs-glass-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    border-radius: 32px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+}
+
+.xhs-title-box { text-align: center; margin-bottom: 30px; }
+.xhs-title { font-size: 56px; font-weight: 900; color: #1d1d1f; margin: 0 0 10px 0; letter-spacing: 2px; }
+.xhs-subtitle { font-size: 24px; color: #515154; font-weight: 500; }
+
+.xhs-list { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+
+.xhs-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.xhs-left { display: flex; flex-direction: column; gap: 6px; }
+.xhs-name { font-size: 30px; font-weight: 800; color: #1d1d1f; }
+.xhs-code { font-size: 20px; color: #86868b; font-weight: 600; }
+
+.xhs-right { text-align: right; display: flex; flex-direction: column; gap: 6px;}
+.xhs-val { font-size: 34px; font-weight: 900; }
+.xhs-desc { font-size: 20px; color: #86868b; }
+
+/* 柔和红绿配色 */
+.xhs-red { color: #ff3b30; }
+.xhs-green { color: #34c759; }
+
+.xhs-footer { text-align: center; font-size: 20px; color: #86868b; margin-top: 20px;}
+
+</style>
+<link rel="stylesheet" href="assets/publisher.css">
+<!-- 引入 html2canvas 用于一键导出小红书图片 -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <div>
+            <div class="brand">QDII DAILY · 发布工作台</div>
+            <div class="sub" id="stamp">正在读取数据…</div>
+        </div>
+        <div>
+            <button class="ghost" onclick="location.reload()">刷新数据</button>
+        </div>
+    </div>
+    
+    <div class="cards">
+        <div class="card"><div class="sub">场外基金</div><div class="metric" id="otcN">—</div></div>
+        <div class="card"><div class="sub">场内 ETF</div><div class="metric" id="etfN">—</div></div>
+        <div class="card"><div class="sub">待核验</div><div class="metric" id="errN">—</div></div>
+    </div>
+
+    <div class="grid">
+        <div class="panel">
+            <div class="indexnav">
+                <button id="idxNasdaq" class="active" onclick="selectIndex('nasdaq100',this)">纳斯达克100</button>
+                <button id="idxSp" onclick="selectIndex('sp500',this)">标普500</button>
+            </div>
+            
+            <div class="sectionbar" style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="sectiontitle" id="sectionTitle">纳斯达克100</div>
+                <button class="primary" onclick="generateXhsPoster()">🔥 生成小红书专属图 (Top 15)</button>
+            </div>
+            
+            <div class="tabs">
+                <button id="tabOtc" class="active" onclick="selectType('otc',this)">场外基金 <span class="countpill" id="otcIndexN"></span></button>
+                <button id="tabEtf" onclick="selectType('etf',this)">场内 ETF (溢价排行) <span class="countpill" id="etfIndexN"></span></button>
+            </div>
+            
+            <div style="overflow:auto">
+                <table><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+            </div>
+        </div>
+        
+        <div>
+            <div class="panel">
+                <h2>数据健康</h2>
+                <div id="errors"></div>
+            </div>
+            <div class="panel" style="margin-top:16px">
+                <h2>关于小红书图表</h2>
+                <p class="sub">左侧表格展示全量数据。<br><br>点击【生成小红书专属图】按钮，系统会自动抓取当前分类（如 ETF）中<b>溢价率排名前 15</b> 的基金，并渲染成 3:4 的高颜值渐变卡片。你可以直接预览并下载 PNG。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 小红书海报预览弹窗 -->
+<dialog id="xhsDialog" class="xhs-dialog">
+    <div class="xhs-dialog-content">
+        <div class="xhs-toolbar">
+            <h2>📱 小红书专属图预览 (Top 15)</h2>
+            <div>
+                <button class="primary" onclick="downloadPoster()">下载高清图片</button>
+                <button class="ghost" onclick="document.getElementById('xhsDialog').close()" style="margin-left:10px;">关闭</button>
+            </div>
+        </div>
+        <div class="xhs-scroll-area">
+            <!-- 真实海报渲染区 -->
+            <div id="posterArea" class="xhs-poster">
+                <div class="xhs-glass-card">
+                    <div class="xhs-title-box">
+                        <h1 class="xhs-title" id="posterTitle">纳指100 ETF 溢价排行榜</h1>
+                        <p class="xhs-subtitle" id="posterSubTitle">更新时间：--</p>
+                    </div>
+                    <div class="xhs-list" id="posterList">
+                        <!-- 数据行注入 -->
+                    </div>
+                    <div class="xhs-footer">* 仅取排名前15只，数据仅供参考，不构成投资建议</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<script>
+let D={otc:[],etf:[],errors:[]},currentIndex='nasdaq100',currentType='otc';
+const $=id=>document.getElementById(id),fmt=v=>v==null||v===''?'—':v,money=v=>v==null?'—':(typeof v==='number'?'¥'+v:fmt(v));
+
+// 基础数据加载与渲染
+async function boot(){
+    try{D=await(await fetch('data/latest.json?'+Date.now())).json()}
+    catch(e){D.errors=['无法读取最新数据。']}
+    render()
+}
+
+function normIndex(x){return String(x||'').toLowerCase().includes('sp')?'sp500':'nasdaq100'}
+
+function render(){
+    $('stamp').textContent=`数据日期 ${D.date||'—'} · 更新 ${D.updated_at||'—'}`;
+    $('otcN').textContent=D.otc.length;
+    $('etfN').textContent=D.etf.length;
+    $('errN').textContent=(D.errors||[]).length;
+    
+    $('errors').innerHTML=(D.errors||[]).length?D.errors.map(x=>`<div class=err>⚠ ${typeof x==='string'?x:[x.code,x.source,x.error].filter(Boolean).join(' · ')}</div>`).join(''):'<div class="ok">● 当前无采集错误</div>';
+    
+    updateIndexView()
+}
+
+function selectIndex(k,btn){
+    currentIndex=k;
+    document.querySelectorAll('.indexnav button').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    updateIndexView()
+}
+
+function selectType(t,btn){
+    currentType=t;
+    document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    updateIndexView()
+}
+
+function updateIndexView(){
+    $('sectionTitle').textContent=currentIndex==='nasdaq100'?'纳斯达克100':'标普500';
+    $('otcIndexN').textContent=D.otc.filter(x=>normIndex(x.index)===currentIndex).length+'只';
+    $('etfIndexN').textContent=D.etf.filter(x=>normIndex(x.index)===currentIndex).length+'只';
+    show(currentType,currentIndex)
+}
+
+function show(type,indexKey){
+    if(type==='otc'){
+        $('thead').innerHTML='<tr><th>基金</th><th>代码</th><th>代销</th><th>直销</th><th>状态</th></tr>';
+        let rows=D.otc.filter(x=>normIndex(x.index)===indexKey);
+        $('tbody').innerHTML=rows.map(x=>`<tr><td>${x.name}</td><td>${x.code}</td><td>${money(x.agency_limit)}</td><td>${money(x.direct_limit)}</td><td>${x.change==='up'?'↑ 放宽':x.change==='down'?'↓ 收紧':x.change==='new'?'新增':'—'}</td></tr>`).join('')
+    }else{
+        $('thead').innerHTML='<tr><th>ETF</th><th>代码</th><th>价格</th><th>T-1溢价率</th><th>成交额</th></tr>';
+        let rows=D.etf.filter(x=>normIndex(x.index)===indexKey);
+        // ETF 默认按溢价率倒序排列（预览表用）
+        rows.sort((a,b)=>(Number(b.premium_pct)||0)-(Number(a.premium_pct)||0));
+        $('tbody').innerHTML=rows.map(x=>`<tr><td>${x.name}</td><td>${x.code}</td><td>${x.price==null?'—':Number(x.price).toFixed(3)}</td><td>${x.premium_pct==null?'—':Number(x.premium_pct).toFixed(2)+'%'}</td><td>${x.amount==null?'—':(x.amount/1e8).toFixed(2)+'亿'}</td></tr>`).join('')
+    }
+}
+
+// ==== 核心：小红书图表生成逻辑 (最多15个) ====
+function generateXhsPoster() {
+    let rows = D[currentType].filter(x => normIndex(x.index) === currentIndex);
+    const indexName = currentIndex === 'nasdaq100' ? '纳指100' : '标普500';
+    const typeName = currentType === 'etf' ? '场内ETF' : '场外基金';
+    
+    $('posterTitle').innerText = `🔥 ${indexName} ${typeName} 概览`;
+    $('posterSubTitle').innerText = `更新时间：${D.updated_at || new Date().toLocaleString()}`;
+    
+    // 1. 数据排序与截断 (只取前 15 个)
+    if (currentType === 'etf') {
+        // ETF 按溢价率排序
+        rows = rows.filter(r => r.premium_pct !== null && r.premium_pct !== undefined);
+        rows.sort((a,b)=>(Number(b.premium_pct)||0)-(Number(a.premium_pct)||0));
+    } else {
+        // 场外按状态或名称排序（此处简单处理为截取前15个代销额度最大的）
+        rows.sort((a,b) => (Number(b.agency_limit)||0) - (Number(a.agency_limit)||0));
+    }
+    
+    const top15 = rows.slice(0, 15);
+    
+    // 2. 渲染卡片 HTML
+    let html = '';
+    top15.forEach(item => {
+        let valText, descText, colorClass = '';
+        if(currentType === 'etf') {
+            const prem = Number(item.premium_pct)||0;
+            colorClass = prem > 0 ? 'xhs-red' : 'xhs-green';
+            valText = (prem > 0 ? '+' : '') + prem.toFixed(2) + '%';
+            descText = `价格: ${item.price ? Number(item.price).toFixed(3) : '--'}`;
+        } else {
+            const limit = Number(item.agency_limit);
+            colorClass = limit > 0 ? 'xhs-red' : 'xhs-green';
+            valText = limit > 0 ? `¥${limit}` : '暂停';
+            descText = `直销: ${item.direct_limit ? `¥${item.direct_limit}` : '--'}`;
+        }
+        
+        html += `
+            <div class="xhs-row">
+                <div class="xhs-left">
+                    <span class="xhs-name">${item.name}</span>
+                    <span class="xhs-code">${item.code}</span>
+                </div>
+                <div class="xhs-right">
+                    <span class="xhs-val ${colorClass}">${valText}</span>
+                    <span class="xhs-desc">${descText}</span>
+                </div>
+            </div>
+        `;
+    });
+    
+    $('posterList').innerHTML = html;
+    
+    // 打开弹窗
+    const dialog = document.getElementById('xhsDialog');
+    dialog.showModal();
+}
+
+// ==== 下载高清海报 ====
+function downloadPoster() {
+    const poster = document.getElementById('posterArea');
+    // 临时移除缩放，保证截图是高清 1080x1440
+    poster.style.transform = 'scale(1)';
+    poster.style.marginBottom = '0';
+    
+    html2canvas(poster, {
+        scale: 2, // 2倍图更清晰
+        useCORS: true,
+        backgroundColor: null
+    }).then(canvas => {
+        // 恢复缩放
+        poster.style.transform = 'scale(0.6)';
+        poster.style.marginBottom = '-576px';
+        
+        const link = document.createElement('a');
+        link.download = `小红书_${currentIndex}_${currentType}_${new Date().getTime()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+boot();
+</script>
+</body>
+</html>
