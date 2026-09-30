@@ -1,0 +1,29 @@
+{
+  "tested_at": "2026-09-30T20:27:15+08:00",
+  "rows": [
+    {
+      "code": "539001",
+      "label": "建信纳斯达克100 A",
+      "seconds": 0.7,
+      "agency_limit": 10.0,
+      "return_1y": 14.91,
+      "ok": true
+    },
+    {
+      "code": "019441",
+      "label": "万家纳斯达克100 A",
+      "seconds": 0.386,
+      "agency_limit": 10.0,
+      "return_1y": 16.36,
+      "ok": true
+    },
+    {
+      "code": "017641",
+      "label": "摩根标普500 A",
+      "seconds": 0.425,
+      "agency_limit": 10.0,
+      "return_1y": 9.61,
+      "ok": true
+    }
+  ]
+}
