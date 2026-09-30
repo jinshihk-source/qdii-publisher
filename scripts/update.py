@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json,re,time,urllib.parse,urllib.request
+import json,re,time,urllib.parse,urllib.request\nfrom html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from datetime import datetime,timedelta,timezone
@@ -11,7 +11,45 @@ def get(url,timeout=10):
  req=urllib.request.Request(url,headers={'User-Agent':UA,'Referer':'https://fund.eastmoney.com/'})
  with urllib.request.urlopen(req,timeout=timeout) as r:return r.read().decode('utf-8','ignore')
 def text(h):return re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',h))
-def classify(name):
+
+class TableParser(HTMLParser):
+ def __init__(self):
+  super().__init__();self.tables=[];self.table=None;self.row=None;self.cell=None
+ def handle_starttag(self,tag,attrs):
+  if tag=='table':self.table=[]
+  elif tag=='tr' and self.table is not None:self.row=[]
+  elif tag in ('td','th') and self.row is not None:self.cell=[]
+ def handle_data(self,data):
+  if self.cell is not None:self.cell.append(data)
+ def handle_endtag(self,tag):
+  if tag in ('td','th') and self.cell is not None:self.row.append(''.join(self.cell).strip());self.cell=None
+  elif tag=='tr' and self.row is not None:
+   if any(self.row):self.table.append(self.row)
+   self.row=None
+  elif tag=='table' and self.table is not None:
+   if self.table:self.tables.append(self.table)
+   self.table=None
+def qvalue(v):
+ v=str(v).strip()
+ if v in ('暂停','无代销','无直销','不适用','—','-'):return v
+ m=re.search(r'[0-9,.]+',v);return float(m.group().replace(',','')) if m else v
+def pct(v):
+ m=re.search(r'[-+]?\d+(?:\.\d+)?',str(v));return float(m.group()) if m else None
+def qdiilimit_tables():
+ h=get('https://qdiilimit.com/',timeout=12);p=TableParser();p.feed(h);otc={};etfs={}
+ for t in p.tables:
+  if not t:continue
+  head=t[0]
+  if '代销限额(元/日)' in head and '直销限额(元/日)' in head:
+   for r in t[1:]:
+    if len(r)<7 or not re.fullmatch(r'\d{6}',r[2].strip()):continue
+    code=r[2].strip();otc[code]={'index':'sp500' if '标普' in r[0] else 'nasdaq100','fund_company':r[1].strip(),'code':code,'name':r[3].strip(),'agency_limit':qvalue(r[4]),'direct_limit':qvalue(r[5]),'fee_annual':pct(r[6]),'tracking_error':pct(r[7]) if len(r)>7 else None,'quota_note':r[8].strip() if len(r)>8 else '','share_class':share_class(r[3])}
+  elif 'T-1日溢价率' in head and '前一日成交额(亿)' in head:
+   for r in t[1:]:
+    if len(r)<9 or not re.fullmatch(r'\d{6}',r[2].strip()):continue
+    code=r[2].strip();etfs[code]={'index':'SP500' if '标普' in r[0] else 'NDX100','fund_company':r[1].strip(),'code':code,'name':r[3].strip(),'size_yi':pct(r[5]),'previous_amount_yi':pct(r[6]),'premium_pct':pct(r[7]),'fee_annual':pct(r[8]),'premium_source':'qdiilimit公开汇总（T-1）'}
+ return otc,etfs
+\ndef classify(name):
  n=name.upper()
  if '纳斯达克100' in name or 'NASDAQ100' in n or 'NASDAQ 100' in n:return 'nasdaq100'
  if '标普500' in name or 'S&P500' in n or 'S&P 500' in n:return 'sp500'
