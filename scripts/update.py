@@ -135,7 +135,7 @@ def main():
   else:
    a,b=comparable(x.get('agency_limit')),comparable(p.get('agency_limit'))
    x['change']='same' if a==b else ('changed')
-etf=etf_quotes();payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（额度/费率/T-1溢价）','东方财富公开场内行情'],'validation_note':'代销额度由天天基金销售页交叉核对；直销/费率/T-1溢价来自公开汇总，实际交易以基金公司及销售渠道为准'}
+ etf=etf_quotes();payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（额度/费率/T-1溢价）','东方财富公开场内行情'],'validation_note':'代销额度由天天基金销售页交叉核对；直销/费率/T-1溢价来自公开汇总，实际交易以基金公司及销售渠道为准'}
  tmp=DATA/'latest.tmp.json';tmp.write_text(json.dumps(payload,ensure_ascii=False,indent=2),'utf-8');tmp.replace(DATA/'latest.json');(HIST/f'{today}.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),'utf-8')
  print(json.dumps({'ok':True,'duration_seconds':payload['duration_seconds'],'otc':len(otc),'etf':len(etf),'errors':len(errs)},ensure_ascii=False))
 if __name__=='__main__':main()
