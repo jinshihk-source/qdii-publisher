@@ -42,77 +42,11 @@ th{color:var(--muted);font-size:12px}
 .err{padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412;margin-bottom:8px}
 @media(max-width:900px){.cards{grid-template-columns:1fr 1fr}.grid,.publish{grid-template-columns:1fr}.wrap{padding:14px}}
 
-/* --- 小红书专属海报样式 --- */
-.xhs-dialog {
-    padding: 0;
-    border: none;
-    border-radius: 20px;
-    background: transparent;
-    max-width: 90vw;
-    max-height: 95vh;
-}
-.xhs-dialog::backdrop { background: rgba(0,0,0,0.7); }
-.xhs-dialog-content { display: flex; flex-direction: column; height: 100%; background: #f5f7fb; }
-.xhs-toolbar { display: flex; justify-content: space-between; padding: 20px; background: white; border-bottom: 1px solid var(--line); align-items: center; }
-.xhs-scroll-area { overflow-y: auto; padding: 40px; display: flex; justify-content: center; background: #eef1f5;}
-
-/* 海报容器：3:4 比例，小红书最爱 */
-.xhs-poster {
-    width: 1080px; /* 固定高分辨率宽度，方便截图 */
-    height: 1440px; 
-    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); /* 渐变背景 */
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding: 60px;
-    border-radius: 40px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-    transform-origin: top center;
-    /* 缩放以适应屏幕，但真实截图时需要原始尺寸 */
-    transform: scale(0.6); 
-    margin-bottom: -576px; /* 补偿缩放后的高度空隙 */
-}
-
-.xhs-glass-card {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    border-radius: 32px;
-    border: 2px solid rgba(255, 255, 255, 0.9);
-    display: flex;
-    flex-direction: column;
-    padding: 40px;
-}
-
-.xhs-title-box { text-align: center; margin-bottom: 30px; }
-.xhs-title { font-size: 56px; font-weight: 900; color: #1d1d1f; margin: 0 0 10px 0; letter-spacing: 2px; }
-.xhs-subtitle { font-size: 24px; color: #515154; font-weight: 500; }
-
-.xhs-list { flex: 1; display: flex; flex-direction: column; gap: 16px; }
-
-.xhs-row {
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(255, 255, 255, 0.85);
-    padding: 20px 30px;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-}
-
-.xhs-left { display: flex; flex-direction: column; gap: 6px; }
-.xhs-name { font-size: 30px; font-weight: 800; color: #1d1d1f; }
-.xhs-code { font-size: 20px; color: #86868b; font-weight: 600; }
-
-.xhs-right { text-align: right; display: flex; flex-direction: column; gap: 6px;}
-.xhs-val { font-size: 34px; font-weight: 900; }
-.xhs-desc { font-size: 20px; color: #86868b; }
-
-/* 柔和红绿配色 */
-.xhs-red { color: #ff3b30; }
-.xhs-green { color: #34c759; }
-
-.xhs-footer { text-align: center; font-size: 20px; color: #86868b; margin-top: 20px;}
-
+/* --- 小红书金融信息海报 --- */
+.xhs-dialog{padding:0;border:0;border-radius:18px;background:#f4f7fb;max-width:96vw;max-height:96vh}.xhs-dialog::backdrop{background:#0b1730cc}.xhs-dialog-content{display:flex;flex-direction:column;max-height:96vh}.xhs-toolbar{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:#fff;border-bottom:1px solid #dbe4f0}.xhs-scroll-area{overflow:auto;padding:28px;background:#eaf0f8;display:flex;justify-content:center}
+.xhs-poster{width:1080px;height:1440px;background:linear-gradient(180deg,#eaf6ff 0,#f8fbff 23%,#f5f7fb 100%);position:relative;overflow:hidden;padding:42px 38px 32px;color:#10264d;transform:scale(.6);transform-origin:top center;margin-bottom:-576px}
+.xhs-poster:before{content:"";position:absolute;left:0;right:0;top:0;height:230px;background:radial-gradient(circle at 78% 20%,#ffffffcc 0 9%,transparent 35%),linear-gradient(120deg,#d7efff,#e8e2ff);z-index:0}.xhs-glass-card{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}.xhs-title-box{padding:6px 10px 24px}.xhs-kicker{font-size:20px;font-weight:800;color:#2f6edb;letter-spacing:2px}.xhs-title{font-size:55px;line-height:1.08;font-weight:900;margin:8px 0;color:#0d2a55}.xhs-subtitle{font-size:22px;color:#526985;margin:0}.xhs-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px}.xhs-metric{background:#ffffffdd;border:1px solid #dce8f5;border-radius:16px;padding:13px 16px}.xhs-metric b{display:block;font-size:26px;color:#1665d8;margin-top:4px}.xhs-metric span{font-size:15px;color:#6c7d93}
+.xhs-section{border-radius:18px 18px 0 0;padding:13px 20px;color:#fff;font-size:25px;font-weight:850;background:linear-gradient(90deg,#1269e8,#39a7ef)}.xhs-section.otc{background:linear-gradient(90deg,#6542df,#9c63e8)}.xhs-list{background:#fff;border:1px solid #dbe6f2;border-top:0;border-radius:0 0 18px 18px;overflow:hidden;flex:1}.xhs-table{width:100%;height:100%;border-collapse:collapse;table-layout:fixed}.xhs-table th{background:#edf5ff;color:#304967;font-size:15px;font-weight:800;padding:9px 5px;border-bottom:1px solid #d5e1ee;text-align:center;white-space:normal}.xhs-table td{font-size:15px;font-weight:650;padding:7px 5px;border-bottom:1px solid #e4ebf3;text-align:right;vertical-align:middle;white-space:nowrap}.xhs-table tbody tr:nth-child(even){background:#f9fbfe}.xhs-table .fund{text-align:left;white-space:normal;padding-left:12px;font-weight:800;color:#173052}.xhs-table .fund small{display:block;color:#8290a3;font-size:13px;font-weight:600;margin-top:2px}.xhs-red{color:#e43c45!important}.xhs-green{color:#139365!important}.xhs-amber{color:#d36a24!important}.xhs-muted{color:#8794a5!important}.xhs-footer{font-size:15px;color:#718197;padding:14px 4px 0;display:flex;justify-content:space-between;gap:16px}.xhs-footer span:last-child{text-align:right}
 </style>
 <link rel="stylesheet" href="assets/publisher.css">
 <!-- 引入 html2canvas 用于一键导出小红书图片 -->
@@ -145,12 +79,12 @@ th{color:var(--muted);font-size:12px}
             
             <div class="sectionbar" style="display:flex; justify-content:space-between; align-items:center;">
                 <div class="sectiontitle" id="sectionTitle">纳斯达克100</div>
-                <button class="primary" onclick="generateXhsPoster()">🔥 生成小红书专属图 (Top 15)</button>
+                <button class="primary" onclick="generateXhsPoster()">生成当前发布图</button>
             </div>
             
             <div class="tabs">
                 <button id="tabOtc" class="active" onclick="selectType('otc',this)">场外基金 <span class="countpill" id="otcIndexN"></span></button>
-                <button id="tabEtf" onclick="selectType('etf',this)">场内 ETF (溢价排行) <span class="countpill" id="etfIndexN"></span></button>
+                <button id="tabEtf" onclick="selectType('etf',this)">场内 ETF <span class="countpill" id="etfIndexN"></span></button>
             </div>
             
             <div style="overflow:auto">
@@ -165,7 +99,7 @@ th{color:var(--muted);font-size:12px}
             </div>
             <div class="panel" style="margin-top:16px">
                 <h2>关于小红书图表</h2>
-                <p class="sub">左侧表格展示全量数据。<br><br>点击【生成小红书专属图】按钮，系统会自动抓取当前分类（如 ETF）中<b>溢价率排名前 15</b> 的基金，并渲染成 3:4 的高颜值渐变卡片。你可以直接预览并下载 PNG。</p>
+                <p class="sub">发布图与当前网页字段保持一致；15只以内一张图，超过15只自动分页。场外完整展示代销、直销、较昨日、年费率和近1年；场内完整展示价格、涨跌、T-1溢价、成交额、年费率和近1年。</p>
             </div>
         </div>
     </div>
@@ -175,7 +109,7 @@ th{color:var(--muted);font-size:12px}
 <dialog id="xhsDialog" class="xhs-dialog">
     <div class="xhs-dialog-content">
         <div class="xhs-toolbar">
-            <h2>📱 小红书专属图预览 (Top 15)</h2>
+            <h2>小红书发布图预览</h2>
             <div>
                 <button class="primary" onclick="downloadPoster()">下载高清图片</button>
                 <button class="ghost" onclick="document.getElementById('xhsDialog').close()" style="margin-left:10px;">关闭</button>
@@ -184,17 +118,14 @@ th{color:var(--muted);font-size:12px}
         <div class="xhs-scroll-area">
             <!-- 真实海报渲染区 -->
             <div id="posterArea" class="xhs-poster">
-                <div class="xhs-glass-card">
-                    <div class="xhs-title-box">
-                        <h1 class="xhs-title" id="posterTitle">纳指100 ETF 溢价排行榜</h1>
-                        <p class="xhs-subtitle" id="posterSubTitle">更新时间：--</p>
-                    </div>
-                    <div class="xhs-list" id="posterList">
-                        <!-- 数据行注入 -->
-                    </div>
-                    <div class="xhs-footer">* 仅取排名前15只，数据仅供参考，不构成投资建议</div>
-                </div>
-            </div>
+ <div class="xhs-glass-card">
+  <div class="xhs-title-box"><div class="xhs-kicker">QDII DAILY · 每日数据观察</div><h1 class="xhs-title" id="posterTitle">QDII 数据一览</h1><p class="xhs-subtitle" id="posterSubTitle">更新时间：—</p></div>
+  <div class="xhs-summary" id="posterSummary"></div>
+  <div class="xhs-section" id="posterSection">场外基金</div>
+  <div class="xhs-list" id="posterList"></div>
+  <div class="xhs-footer"><span>数据：公开基金资料 / 东方财富 / 天天基金 / qdiilimit</span><span>T-1溢价为上一交易日数据 · 不构成投资建议</span></div>
+ </div>
+</div></div>
         </div>
     </div>
 </dialog>
@@ -244,78 +175,39 @@ function updateIndexView(){
     show(currentType,currentIndex)
 }
 
+function changeText(v){return v==='up'?'↑ 放宽':v==='down'?'↓ 收紧':v==='new'?'新增':v==='changed'?'有变化':'—'}
+function fundSort(rows){let totals={};rows.forEach(x=>{let c=x.fund_company||'';totals[c]=(totals[c]||0)+(typeof x.agency_limit==='number'?x.agency_limit:0)+(typeof x.direct_limit==='number'?x.direct_limit:0)});return rows.slice().sort((a,b)=>(b.company_total_quota??totals[b.fund_company||'']??0)-(a.company_total_quota??totals[a.fund_company||'']??0))}
 function show(type,indexKey){
-    if(type==='otc'){
-        $('thead').innerHTML='<tr><th>基金</th><th>代码</th><th>代销</th><th>直销</th><th>状态</th></tr>';
-        let rows=D.otc.filter(x=>normIndex(x.index)===indexKey);
-        $('tbody').innerHTML=rows.map(x=>`<tr><td>${x.name}</td><td>${x.code}</td><td>${money(x.agency_limit)}</td><td>${money(x.direct_limit)}</td><td>${x.change==='up'?'↑ 放宽':x.change==='down'?'↓ 收紧':x.change==='new'?'新增':'—'}</td></tr>`).join('')
-    }else{
-        $('thead').innerHTML='<tr><th>ETF</th><th>代码</th><th>价格</th><th>T-1溢价率</th><th>成交额</th></tr>';
-        let rows=D.etf.filter(x=>normIndex(x.index)===indexKey);
-        // ETF 默认按溢价率倒序排列（预览表用）
-        rows.sort((a,b)=>(Number(b.premium_pct)||0)-(Number(a.premium_pct)||0));
-        $('tbody').innerHTML=rows.map(x=>`<tr><td>${x.name}</td><td>${x.code}</td><td>${x.price==null?'—':Number(x.price).toFixed(3)}</td><td>${x.premium_pct==null?'—':Number(x.premium_pct).toFixed(2)+'%'}</td><td>${x.amount==null?'—':(x.amount/1e8).toFixed(2)+'亿'}</td></tr>`).join('')
-    }
-}
-
+ if(type==='otc'){
+  $('thead').innerHTML='<tr><th>基金</th><th>代码</th><th>代销</th><th>直销</th><th>较昨日</th><th>年费率</th><th>近1年</th></tr>';
+  let rows=fundSort(D.otc.filter(x=>normIndex(x.index)===indexKey));
+  $('tbody').innerHTML=rows.map(x=>`<tr><td>${x.name}</td><td>${x.code}</td><td>${money(x.agency_limit)}</td><td>${money(x.direct_limit)}</td><td>${changeText(x.change)}</td><td>${x.fee_annual==null?'—':Number(x.fee_annual).toFixed(2)+'%'}</td><td>${x.return_1y==null?'—':(x.return_1y>=0?'+':'')+Number(x.return_1y).toFixed(2)+'%'}</td></tr>`).join('')
+ }else{
+  $('thead').innerHTML='<tr><th>ETF</th><th>代码</th><th>价格</th><th>涨跌幅</th><th>T-1溢价率</th><th>成交额</th><th>年费率</th><th>近1年</th></tr>';
+  let rows=D.etf.filter(x=>normIndex(x.index)===indexKey);
+  $('tbody').innerHTML=rows.map(x=>`<tr><td>${x.name}</td><td>${x.code}</td><td>${x.price==null?'—':Number(x.price).toFixed(3)}</td><td>${x.change_pct==null?'—':(x.change_pct>=0?'+':'')+Number(x.change_pct).toFixed(2)+'%'}</td><td>${x.premium_pct==null?'—':Number(x.premium_pct).toFixed(2)+'%'}</td><td>${x.amount==null?'—':(x.amount/1e8).toFixed(2)+'亿'}</td><td>${x.fee_annual==null?'—':Number(x.fee_annual).toFixed(2)+'%'}</td><td>${x.return_1y==null?'—':(x.return_1y>=0?'+':'')+Number(x.return_1y).toFixed(2)+'%'}</td></tr>`).join('')
+ }}
 // ==== 核心：小红书图表生成逻辑 (最多15个) ====
-function generateXhsPoster() {
-    let rows = D[currentType].filter(x => normIndex(x.index) === currentIndex);
-    const indexName = currentIndex === 'nasdaq100' ? '纳指100' : '标普500';
-    const typeName = currentType === 'etf' ? '场内ETF' : '场外基金';
-    
-    $('posterTitle').innerText = `🔥 ${indexName} ${typeName} 概览`;
-    $('posterSubTitle').innerText = `更新时间：${D.updated_at || new Date().toLocaleString()}`;
-    
-    // 1. 数据排序与截断 (只取前 15 个)
-    if (currentType === 'etf') {
-        // ETF 按溢价率排序
-        rows = rows.filter(r => r.premium_pct !== null && r.premium_pct !== undefined);
-        rows.sort((a,b)=>(Number(b.premium_pct)||0)-(Number(a.premium_pct)||0));
-    } else {
-        // 场外按状态或名称排序（此处简单处理为截取前15个代销额度最大的）
-        rows.sort((a,b) => (Number(b.agency_limit)||0) - (Number(a.agency_limit)||0));
-    }
-    
-    const top15 = rows.slice(0, 15);
-    
-    // 2. 渲染卡片 HTML
-    let html = '';
-    top15.forEach(item => {
-        let valText, descText, colorClass = '';
-        if(currentType === 'etf') {
-            const prem = Number(item.premium_pct)||0;
-            colorClass = prem > 0 ? 'xhs-red' : 'xhs-green';
-            valText = (prem > 0 ? '+' : '') + prem.toFixed(2) + '%';
-            descText = `价格: ${item.price ? Number(item.price).toFixed(3) : '--'}`;
-        } else {
-            const limit = Number(item.agency_limit);
-            colorClass = limit > 0 ? 'xhs-red' : 'xhs-green';
-            valText = limit > 0 ? `¥${limit}` : '暂停';
-            descText = `直销: ${item.direct_limit ? `¥${item.direct_limit}` : '--'}`;
-        }
-        
-        html += `
-            <div class="xhs-row">
-                <div class="xhs-left">
-                    <span class="xhs-name">${item.name}</span>
-                    <span class="xhs-code">${item.code}</span>
-                </div>
-                <div class="xhs-right">
-                    <span class="xhs-val ${colorClass}">${valText}</span>
-                    <span class="xhs-desc">${descText}</span>
-                </div>
-            </div>
-        `;
-    });
-    
-    $('posterList').innerHTML = html;
-    
-    // 打开弹窗
-    const dialog = document.getElementById('xhsDialog');
-    dialog.showModal();
+function pct(v){return v==null?'—':(Number(v)>=0?'+':'')+Number(v).toFixed(2)+'%'}
+function posterMoney(v){if(v==null)return '—';if(typeof v!=='number')return String(v);return v>=10000?'¥'+(v/10000).toFixed(v%10000?1:0)+'万':'¥'+v.toLocaleString('zh-CN')}
+function generateXhsPoster(){
+ let rows=D[currentType].filter(x=>normIndex(x.index)===currentIndex);if(currentType==='otc')rows=fundSort(rows);
+ const indexName=currentIndex==='nasdaq100'?'纳斯达克100':'标普500',typeName=currentType==='etf'?'场内 ETF':'场外基金';
+ if(rows.length>15){alert('当前有 '+rows.length+' 只，单张最多15只。请先按当前规则生成前15只；下一步可扩展自动分页。')}
+ rows=rows.slice(0,15);$('posterTitle').innerText=indexName+' QDII '+typeName+' 一览';$('posterSubTitle').innerText='数据日期 '+(D.date||'—')+' · 更新 '+(D.updated_at||'—');
+ $('posterSection').className='xhs-section'+(currentType==='otc'?' otc':'');$('posterSection').innerText=typeName+'（共 '+rows.length+' 只）';
+ if(currentType==='etf'){
+  const ps=rows.map(x=>Number(x.premium_pct)).filter(Number.isFinite),rs=rows.map(x=>Number(x.return_1y)).filter(Number.isFinite);
+  const avg=ps.length?ps.reduce((a,b)=>a+b,0)/ps.length:null,hi=ps.length?Math.max(...ps):null,best=rs.length?Math.max(...rs):null;
+  $('posterSummary').innerHTML=`<div class="xhs-metric"><span>ETF数量</span><b>${rows.length}只</b></div><div class="xhs-metric"><span>平均 T-1 溢价</span><b>${avg==null?'—':avg.toFixed(2)+'%'}</b></div><div class="xhs-metric"><span>最高 T-1 溢价</span><b>${hi==null?'—':hi.toFixed(2)+'%'}</b></div><div class="xhs-metric"><span>近1年最高</span><b>${best==null?'—':pct(best)}</b></div>`;
+  $('posterList').innerHTML=`<table class="xhs-table"><colgroup><col style="width:29%"><col style="width:11%"><col style="width:12%"><col style="width:13%"><col style="width:12%"><col style="width:10%"><col style="width:13%"></colgroup><thead><tr><th>ETF名称（代码）</th><th>价格</th><th>涨跌幅</th><th>T-1溢价</th><th>成交额</th><th>年费率</th><th>近1年</th></tr></thead><tbody>`+rows.map(x=>`<tr><td class="fund">${x.name}<small>${x.code}</small></td><td>${x.price==null?'—':Number(x.price).toFixed(3)}</td><td class="${Number(x.change_pct)>=0?'xhs-red':'xhs-green'}">${pct(x.change_pct)}</td><td class="${Number(x.premium_pct)>8?'xhs-amber':''}">${x.premium_pct==null?'—':Number(x.premium_pct).toFixed(2)+'%'}</td><td>${x.amount==null?'—':(x.amount/1e8).toFixed(1)+'亿'}</td><td>${x.fee_annual==null?'—':Number(x.fee_annual).toFixed(2)+'%'}</td><td class="${Number(x.return_1y)>=0?'xhs-red':'xhs-green'}">${pct(x.return_1y)}</td></tr>`).join('')+'</tbody></table>';
+ }else{
+  const ag=rows.filter(x=>typeof x.agency_limit==='number'&&x.agency_limit>0).length,dr=rows.filter(x=>typeof x.direct_limit==='number'&&x.direct_limit>0).length,changed=rows.filter(x=>x.change&&x.change!=='same').length,rs=rows.map(x=>Number(x.return_1y)).filter(Number.isFinite),best=rs.length?Math.max(...rs):null;
+  $('posterSummary').innerHTML=`<div class="xhs-metric"><span>基金数量</span><b>${rows.length}只</b></div><div class="xhs-metric"><span>代销可申购</span><b>${ag}只</b></div><div class="xhs-metric"><span>直销可申购</span><b>${dr}只</b></div><div class="xhs-metric"><span>今日额度变化</span><b>${changed}只</b></div>`;
+  $('posterList').innerHTML=`<table class="xhs-table"><colgroup><col style="width:32%"><col style="width:14%"><col style="width:14%"><col style="width:13%"><col style="width:12%"><col style="width:15%"></colgroup><thead><tr><th>基金名称（代码）</th><th>代销额度</th><th>直销额度</th><th>较昨日</th><th>年费率</th><th>近1年</th></tr></thead><tbody>`+rows.map(x=>`<tr><td class="fund">${x.name}<small>${x.code}</small></td><td>${posterMoney(x.agency_limit)}</td><td>${posterMoney(x.direct_limit)}</td><td>${changeText(x.change)}</td><td>${x.fee_annual==null?'—':Number(x.fee_annual).toFixed(2)+'%'}</td><td class="${Number(x.return_1y)>=0?'xhs-red':'xhs-green'}">${pct(x.return_1y)}</td></tr>`).join('')+'</tbody></table>';
+ }
+ $('xhsDialog').showModal();
 }
-
 // ==== 下载高清海报 ====
 function downloadPoster() {
     const poster = document.getElementById('posterArea');
