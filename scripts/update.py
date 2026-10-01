@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from datetime import datetime,timedelta,timezone
-from etf_collect import collect_etfs,snapshots,sort_otc,publish
+from etf_collect import collect_etfs,snapshots,sort_otc,publish,parse_pingzhong
 ROOT=Path(__file__).resolve().parents[1];DATA=ROOT/'data';HIST=DATA/'history';HIST.mkdir(parents=True,exist_ok=True)
 TZ=timezone(timedelta(hours=8));now=datetime.now(TZ);today=now.date().isoformat()
 UA='Mozilla/5.0 AppleWebKit/537.36 Chrome/154 Safari/537.36'
@@ -98,13 +98,17 @@ def parse_one(f):
  elif status=='unavailable':agency='不可申购'
  elif status=='open':agency='开放'
  else:agency=amt
- m=re.search(r'近1年[：:]?\s*([-+0-9.]+)%',s);r1=float(m.group(1)) if m else None
+ m=re.search(r'近1年[：:]?\s*([-+0-9.]+)%',s);r1=float(m.group(1)) if m else None;r1date=None
+ try:
+  r1,r1date=parse_pingzhong(get(f'https://fund.eastmoney.com/pingzhongdata/{f["code"]}.js'),f['code'])
+ except Exception:
+  pass
  # 管理人字段；若页面形态变化则保留空值，不猜
  company=None
  for pat in [r'基金管理人[：:]?\s*([^|]{2,24}?基金)',r'管 理 人[：:]?\s*([^|]{2,24}?基金)']:
   mm=re.search(pat,s)
   if mm:company=mm.group(1).strip().lstrip('：: ').strip();break
- return {**f,'agency_limit':agency,'agency_status':status,'direct_limit':None,'direct_status':'unverified','fund_company':company,'fee_annual':None,'return_1y':r1,'source_url':'https://fund.eastmoney.com/'+f['code']+'.html','fetch_seconds':round(time.perf_counter()-t,3)}
+ return {**f,'agency_limit':agency,'agency_status':status,'direct_limit':None,'direct_status':'unverified','fund_company':company,'fee_annual':None,'return_1y':r1,'return_1y_date':r1date,'return_1y_source':f'https://fund.eastmoney.com/pingzhongdata/{f["code"]}.js','source_url':'https://fund.eastmoney.com/'+f['code']+'.html','fetch_seconds':round(time.perf_counter()-t,3)}
 def fetch_otc(qmap):
  rows=[];errors=[]
  try:funds=discover()
@@ -118,7 +122,7 @@ def fetch_otc(qmap):
  live={x['code']:x for x in rows};merged=[]
  for code,q in qmap.items():
   x=live.get(code,{})
-  q['return_1y']=x.get('return_1y');q['agency_live']=x.get('agency_limit');q['agency_status']=x.get('agency_status');q['direct_status']='published-summary';q['source_url']=x.get('source_url');q['fetch_seconds']=x.get('fetch_seconds')
+  q['return_1y']=x.get('return_1y');q['return_1y_date']=x.get('return_1y_date');q['return_1y_source']=x.get('return_1y_source');q['agency_live']=x.get('agency_limit');q['agency_status']=x.get('agency_status');q['direct_status']='published-summary';q['source_url']=x.get('source_url');q['fetch_seconds']=x.get('fetch_seconds')
   q['verification']='matched' if x and str(x.get('agency_limit'))==str(q.get('agency_limit')) else ('agency-source-diff' if x else 'summary-only')
   merged.append(q)
  return merged,errors
