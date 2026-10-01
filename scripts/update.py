@@ -140,23 +140,34 @@ def fetch_etf_metadata(history):
 def etf_quotes(master,history,deadline):
  return collect_etfs(master,get,TableParser,history,deadline)
 
-def fetch_indices(history):
+def fetch_benchmarks(history):
+ """Collect the latest *completed* US regular-session close for the poster.
+
+ Yahoo's daily chart gives us completed daily candles.  Using the final two
+ closes avoids presenting an intraday `regularMarketPrice` as a US close.
+ """
  out={};errs=[]
- for key,symbol,label in [('nasdaq100','%5ENDX','纳斯达克100'),('sp500','%5EGSPC','标普500')]:
+ for key,symbol,label in [('nasdaq100','QQQ','纳斯达克100'),('sp500','SPY','标普500')]:
   try:
-   raw=json.loads(get(f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=1y&interval=1d',timeout=8))
-   r=raw['chart']['result'][0];meta=r.get('meta') or {};ts=r.get('timestamp') or [];cl=(r.get('indicators',{}).get('quote') or [{}])[0].get('close') or []
-   pts=[[int(t),round(float(v),2)] for t,v in zip(ts,cl) if v is not None]
-   price=meta.get('regularMarketPrice');prev=meta.get('chartPreviousClose') or meta.get('previousClose')
-   if price is None and pts:price=pts[-1][1]
-   if prev is None and len(pts)>1:prev=pts[-2][1]
-   change=(float(price)-float(prev)) if price is not None and prev is not None else None
-   out[key]={'name':label,'symbol':'^NDX' if key=='nasdaq100' else '^GSPC','price':round(float(price),2) if price is not None else None,'change':round(change,2) if change is not None else None,'change_pct':round(change/float(prev)*100,2) if change is not None and prev else None,'history_1y':pts,'source':'Yahoo Finance chart','status':'live','updated_at':now.isoformat(timespec='seconds')}
+   # Tencent's US quote includes its completed 16:00 regular-session record.
+   # We deliberately reject any response whose timestamp is not the close.
+   raw=get(f'https://qt.gtimg.cn/q=us{symbol}',timeout=8)
+   fields=raw.split('"')[1].split('~')
+   stamp=fields[30]
+   if not stamp.endswith('16:00:01'):raise ValueError('quote is not a completed regular-session close')
+   close=float(fields[3]);prev=float(fields[4]);change=float(fields[31]);change_pct=float(fields[32]);effective_date=stamp[:10]
+   out[key]={'name':label,'symbol':symbol,'price':round(close,2),'change':round(change,2),
+             'change_pct':round(change_pct,2),'effective_date':effective_date,
+             'source':'Tencent US regular-session quote','status':'live',
+             'updated_at':now.isoformat(timespec='seconds')}
   except Exception as exc:
-   old=next((h.get('indices',{}).get(key) for h in history if h.get('indices',{}).get(key,{}).get('price') is not None),None)
+   old=next((h.get('benchmarks',{}).get(key) for h in history
+             if h.get('benchmarks',{}).get(key,{}).get('price') is not None),None)
    if old:out[key]={**old,'status':'fallback','error':str(exc)}
-   else:out[key]={'name':label,'price':None,'change':None,'change_pct':None,'history_1y':[],'status':'unavailable','error':str(exc)}
-   errs.append({'source':'market index '+key,'error':str(exc)})
+   else:out[key]={'name':label,'symbol':symbol,'price':None,'change':None,
+                  'change_pct':None,'effective_date':None,'source':'Tencent US regular-session quote',
+                  'status':'unavailable','error':str(exc)}
+   errs.append({'source':'benchmark '+symbol,'error':str(exc)})
  return out,errs
 
 def previous_day():
@@ -169,8 +180,8 @@ def comparable(v):
 def main():
  started=time.perf_counter();deadline=time.monotonic()+50;old=previous_day();history=snapshots(DATA)
  qmap,master,metadata_errors=fetch_etf_metadata(history)
- indices,index_errors=fetch_indices(history)
- metadata_errors.extend(index_errors)
+ benchmarks,benchmark_errors=fetch_benchmarks(history)
+ metadata_errors.extend(benchmark_errors)
  with ThreadPoolExecutor(max_workers=2) as pool:
   otc_job=pool.submit(fetch_otc,qmap)
   etf_job=pool.submit(etf_quotes,master,history,deadline)
@@ -185,7 +196,7 @@ def main():
   else:
    a,b=comparable(x.get('agency_limit')),comparable(p.get('agency_limit'))
    x['change']='same' if a==b else ('changed')
- payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'indices':indices,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留历史快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外代销额度由天天基金销售页交叉核对，直销/费率来自公开汇总。'}
+ payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'benchmarks':benchmarks,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）','腾讯 QQQ/SPY 美股常规交易日收盘'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留历史快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外不展示溢价、净值或日涨跌。QQQ/SPY 使用最近美股常规交易日收盘，采集失败时保留上一份有效快照。近一年收益仅取天天基金 pingzhongdata 的 syl_1n。'}
  publish(payload,DATA,history)
  print(json.dumps({'ok':True,'duration_seconds':payload['duration_seconds'],'otc':len(otc),'etf':len(etf),'errors':len(errs)},ensure_ascii=False))
 if __name__=='__main__':main()
