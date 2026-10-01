@@ -151,7 +151,7 @@ def fetch_benchmarks(history):
  closes avoids presenting an intraday `regularMarketPrice` as a US close.
  """
  out={};errs=[]
- for key,symbol,label in [('nasdaq100','QQQ','纳斯达克100'),('sp500','SPY','标普500')]:
+ for key,symbol,label in [('nasdaq100','%5ENDX','纳斯达克100'),('sp500','%5EGSPC','标普500')]:
   try:
    raw=json.loads(get(f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=10d&interval=1d',timeout=8))
    result=raw['chart']['result'][0];timestamps=result.get('timestamp') or []
@@ -166,7 +166,7 @@ def fetch_benchmarks(history):
              'updated_at':now.isoformat(timespec='seconds')}
   except Exception as exc:
    old=next((h.get('benchmarks',{}).get(key) for h in history
-             if h.get('benchmarks',{}).get(key,{}).get('price') is not None),None)
+             if h.get('benchmarks',{}).get(key,{}).get('price') is not None and h.get('benchmarks',{}).get(key,{}).get('symbol') in ('^NDX','^GSPC','%5ENDX','%5EGSPC')),None)
    if old:out[key]={**old,'status':'fallback','error':str(exc)}
    else:out[key]={'name':label,'symbol':symbol,'price':None,'change':None,
                   'previous_price':None,'change_pct':None,'effective_date':None,'source':'Yahoo Finance daily chart',
@@ -200,7 +200,7 @@ def main():
   else:
    a,b=comparable(x.get('agency_limit')),comparable(p.get('agency_limit'))
    x['change']='same' if a==b else ('changed')
- payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'benchmarks':benchmarks,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）','Yahoo Finance QQQ/SPY 日线（最近美股常规交易日收盘）'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留上一份 Yahoo 有效快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外不展示溢价、净值或日涨跌。QQQ/SPY 使用 Yahoo Finance 最近美股常规交易日收盘，采集失败时保留上一份有效快照。近一年收益仅取天天基金 pingzhongdata 的 syl_1n。'}
+ payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'benchmarks':benchmarks,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）','Yahoo Finance ^NDX/^GSPC 指数日线（最近美股常规交易日收盘）'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留上一份 Yahoo 有效快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外不展示溢价、净值或日涨跌。NDX/S&P 500 使用 Yahoo Finance ^NDX/^GSPC 最近美股常规交易日价格指数收盘；禁止用 QQQ/SPY ETF 价格替代指数点位；采集失败时仅保留同一价格指数的历史有效快照。近一年收益仅取天天基金 pingzhongdata 的 syl_1n。'}
  publish(payload,DATA,history)
  print(json.dumps({'ok':True,'duration_seconds':payload['duration_seconds'],'otc':len(otc),'etf':len(etf),'errors':len(errs)},ensure_ascii=False))
 if __name__=='__main__':main()
