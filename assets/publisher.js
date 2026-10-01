@@ -52,11 +52,19 @@ function renderPoster(p){const c=document.createElement('canvas');c.width=1080;c
 /* index.html loads before this file; replace its legacy branch before clicks occur. */
 setTimeout(()=>{pages=posterPages;drawPage=renderPoster;},0);
 let exportItems=[];
-async function previewNasdaq(){await Promise.all([document.fonts.ready,heroReady]);openExport(pages().filter(p=>p.type==='otc'&&p.index==='纳指100'));}
-async function previewCurrent(){await Promise.all([document.fonts.ready,heroReady]);const label=currentIndex==='nasdaq100'?'纳指100':'标普500';openExport(pages().filter(p=>p.type===currentType&&p.index===label));}
+async function previewNasdaq(){await Promise.all([document.fonts.ready,heroReady]);openUnifiedExport(posterPages().filter(p=>p.type==='otc'&&p.index==='纳指100'));}
+async function previewCurrent(){await Promise.all([document.fonts.ready,heroReady]);const label=currentIndex==='nasdaq100'?'纳指100':'标普500';openUnifiedExport(posterPages().filter(p=>p.type===currentType&&p.index===label));}
 function exportFilename(p){return `${D.date||'QDII'}-${p.index}-${p.type==='otc'?'场外':'场内'}-${String(p.part).padStart(2,'0')}.png`;}
 function saveBlob(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);}
 function canvasBlob(canvas){return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('图片生成失败')),'image/png'));}
+function openUnifiedExport(ps){
+ if(!ps.length){alert('当前没有可生成的数据，请先更新。');return;}
+ const grid=$('exportGrid');grid.replaceChildren();exportItems=[];
+ for(const p of ps){const canvas=renderPoster(p),card=document.createElement('article');card.className='export-card';card.append(canvas);
+  const button=document.createElement('button');button.className='ghost';button.textContent=`下载 ${p.index} · 第 ${p.part} / ${p.total} 张`;button.onclick=async()=>saveBlob(await canvasBlob(canvas),exportFilename(p));card.append(button);grid.append(card);exportItems.push({p,canvas});}
+ $('exportCount').textContent=`${ps.length} 张 · 1080 × 1440 · 每张最多 15 只 · 紧凑榜单`;
+ if(!$('exportDialog').open)$('exportDialog').showModal();
+}
 function openExport(ps){
  if(!ps.length){alert('当前没有可生成的数据，请先更新。');return;}
  const grid=$('exportGrid');grid.replaceChildren();exportItems=[];
