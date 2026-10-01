@@ -1869,6 +1869,7 @@
   "benchmarks": {
     "nasdaq100": {
       "name": "NDX（Nasdaq-100 Price Return）",
+      "display_symbol": "NDX",
       "symbol": "NDX",
       "price": 30408.5,
       "change": 69.17,
@@ -1881,6 +1882,7 @@
     },
     "sp500": {
       "name": "标普500",
+      "display_symbol": "标普500",
       "symbol": "^GSPC",
       "price": 7651.54,
       "change": null,

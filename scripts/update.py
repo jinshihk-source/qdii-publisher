@@ -160,7 +160,7 @@ def fetch_benchmarks(history):
    if len(points)<2:raise ValueError('insufficient completed daily closes')
    prev_ts,prev=points[-2];close_ts,close=points[-1];change=close-prev
    effective_date=datetime.fromtimestamp(close_ts,timezone.utc).date().isoformat()
-   out[key]={'name':label,'symbol':symbol,'price':round(close,2),'change':round(change,2),
+   out[key]={'name':label,'display_symbol':'NDX' if key=='nasdaq100' else '标普500','symbol':symbol,'price':round(close,2),'change':round(change,2),
              'previous_price':round(prev,2),'change_pct':round(change/prev*100,2),'effective_date':effective_date,
              'source':'Yahoo Finance daily chart (NDX/S&P 500 index)','status':'live',
              'updated_at':now.isoformat(timespec='seconds')}
@@ -168,7 +168,7 @@ def fetch_benchmarks(history):
    old=next((h.get('benchmarks',{}).get(key) for h in history
              if h.get('benchmarks',{}).get(key,{}).get('price') is not None),None)
    if old:out[key]={**old,'status':'fallback','error':str(exc)}
-   else:out[key]={'name':label,'symbol':symbol,'price':None,'change':None,
+   else:out[key]={'name':label,'display_symbol':'NDX' if key=='nasdaq100' else '标普500','symbol':symbol,'price':None,'change':None,
                   'previous_price':None,'change_pct':None,'effective_date':None,'source':'Yahoo Finance daily chart (NDX/S&P 500 index)',
                   'status':'unavailable','error':str(exc)}
    errs.append({'source':'benchmark '+key,'error':str(exc)})
