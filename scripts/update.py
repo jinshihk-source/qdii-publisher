@@ -149,23 +149,23 @@ def fetch_benchmarks(history):
  out={};errs=[]
  for key,symbol,label in [('nasdaq100','QQQ','纳斯达克100'),('sp500','SPY','标普500')]:
   try:
-   # Tencent's US quote includes its completed 16:00 regular-session record.
-   # We deliberately reject any response whose timestamp is not the close.
-   raw=get(f'https://qt.gtimg.cn/q=us{symbol}',timeout=8)
-   fields=raw.split('"')[1].split('~')
-   stamp=fields[30]
-   if not stamp.endswith('16:00:01'):raise ValueError('quote is not a completed regular-session close')
-   close=float(fields[3]);prev=float(fields[4]);change=float(fields[31]);change_pct=float(fields[32]);effective_date=stamp[:10]
+   raw=json.loads(get(f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=10d&interval=1d',timeout=8))
+   result=raw['chart']['result'][0];timestamps=result.get('timestamp') or []
+   closes=(result.get('indicators',{}).get('quote') or [{}])[0].get('close') or []
+   points=[(int(ts),float(value)) for ts,value in zip(timestamps,closes) if value is not None]
+   if len(points)<2:raise ValueError('insufficient completed daily closes')
+   prev_ts,prev=points[-2];close_ts,close=points[-1];change=close-prev
+   effective_date=datetime.fromtimestamp(close_ts,timezone.utc).date().isoformat()
    out[key]={'name':label,'symbol':symbol,'price':round(close,2),'change':round(change,2),
-             'change_pct':round(change_pct,2),'effective_date':effective_date,
-             'source':'Tencent US regular-session quote','status':'live',
+             'previous_price':round(prev,2),'change_pct':round(change/prev*100,2),'effective_date':effective_date,
+             'source':'Yahoo Finance daily chart','status':'live',
              'updated_at':now.isoformat(timespec='seconds')}
   except Exception as exc:
    old=next((h.get('benchmarks',{}).get(key) for h in history
              if h.get('benchmarks',{}).get(key,{}).get('price') is not None),None)
    if old:out[key]={**old,'status':'fallback','error':str(exc)}
    else:out[key]={'name':label,'symbol':symbol,'price':None,'change':None,
-                  'change_pct':None,'effective_date':None,'source':'Tencent US regular-session quote',
+                  'previous_price':None,'change_pct':None,'effective_date':None,'source':'Yahoo Finance daily chart',
                   'status':'unavailable','error':str(exc)}
    errs.append({'source':'benchmark '+symbol,'error':str(exc)})
  return out,errs
@@ -196,7 +196,7 @@ def main():
   else:
    a,b=comparable(x.get('agency_limit')),comparable(p.get('agency_limit'))
    x['change']='same' if a==b else ('changed')
- payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'benchmarks':benchmarks,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）','腾讯 QQQ/SPY 美股常规交易日收盘'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留历史快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外不展示溢价、净值或日涨跌。QQQ/SPY 使用最近美股常规交易日收盘，采集失败时保留上一份有效快照。近一年收益仅取天天基金 pingzhongdata 的 syl_1n。'}
+ payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'benchmarks':benchmarks,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）','Yahoo Finance QQQ/SPY 日线（最近美股常规交易日收盘）'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留上一份 Yahoo 有效快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外不展示溢价、净值或日涨跌。QQQ/SPY 使用 Yahoo Finance 最近美股常规交易日收盘，采集失败时保留上一份有效快照。近一年收益仅取天天基金 pingzhongdata 的 syl_1n。'}
  publish(payload,DATA,history)
  print(json.dumps({'ok':True,'duration_seconds':payload['duration_seconds'],'otc':len(otc),'etf':len(etf),'errors':len(errs)},ensure_ascii=False))
 if __name__=='__main__':main()

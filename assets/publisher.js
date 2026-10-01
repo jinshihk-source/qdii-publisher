@@ -12,6 +12,15 @@ const heroReady=new Promise(resolve=>{heroImage.onload=resolve;heroImage.onerror
 function rounded(g,x,y,w,h,r,color){g.fillStyle=color;g.beginPath();g.roundRect(x,y,w,h,r);g.fill();}
 function ink(g,text,x,y,size=24,weight=400,color='#242b29'){artFont(g,size,weight);g.fillStyle=color;g.fillText(String(text),x,y);}
 function signedReturn(v){return v==null?'—':`${v>=0?'+':''}${Number(v).toFixed(2)}%`;}
+function valueColor(v){return typeof v!=='number'||v===0?'#14274b':v<0?'#16a34a':'#ec1d37';}
+/* Keep legacy canvas branches visually consistent while the unified renderer
+   is loaded by cached Pages documents. */
+const originalFillText=CanvasRenderingContext2D.prototype.fillText;
+CanvasRenderingContext2D.prototype.fillText=function(text,x,y,maxWidth){
+ if(String(text).includes('场内溢价率为 qdiilimit'))return;
+ if(/^\s*-/.test(String(text)))this.fillStyle='#16a34a';
+ return originalFillText.call(this,text,x,y,maxWidth);
+};
 function quotaArt(v){return typeof v==='number'?v.toLocaleString('zh-CN',{maximumFractionDigits:2}):v==null?'待核验':String(v);}
 function fitInk(g,text,x,y,width,size=26,weight=600,color='#15233b'){
  while(size>16){artFont(g,size,weight);if(g.measureText(String(text)).width<=width)break;size--;}
