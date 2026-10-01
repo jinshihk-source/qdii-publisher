@@ -1868,28 +1868,28 @@
   ],
   "benchmarks": {
     "nasdaq100": {
-      "name": "纳斯达克100",
-      "symbol": "QQQ",
-      "price": 739.77,
-      "change": 1.84,
-      "change_pct": 0.25,
+      "name": "NDX（Nasdaq-100 Price Return）",
+      "symbol": "NDX",
+      "price": 30408.5,
+      "change": 69.17,
+      "change_pct": 0.23,
       "effective_date": "2026-09-30",
-      "source": "Tencent US regular-session quote",
-      "status": "fallback",
+      "source": "Yahoo Finance NDX index",
+      "status": "live",
       "updated_at": "2026-10-01T09:06:05+08:00",
-      "error": "HTTP Error 429: Too Many Requests"
+      "error": null
     },
     "sp500": {
       "name": "标普500",
-      "symbol": "SPY",
-      "price": 762.63,
-      "change": -1.57,
-      "change_pct": -0.21,
+      "symbol": "^GSPC",
+      "price": 7651.54,
+      "change": null,
+      "change_pct": null,
       "effective_date": "2026-09-30",
-      "source": "Tencent US regular-session quote",
-      "status": "fallback",
+      "source": "Yahoo Finance S&P 500 index",
+      "status": "live",
       "updated_at": "2026-10-01T09:06:05+08:00",
-      "error": "HTTP Error 429: Too Many Requests"
+      "error": null
     }
   },
   "errors": [

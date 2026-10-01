@@ -151,7 +151,7 @@ def fetch_benchmarks(history):
  closes avoids presenting an intraday `regularMarketPrice` as a US close.
  """
  out={};errs=[]
- for key,symbol,label in [('nasdaq100','QQQ','纳斯达克100'),('sp500','SPY','标普500')]:
+ for key,symbol,label in [('nasdaq100','%5ENDX','NDX（Nasdaq-100 Price Return）'),('sp500','%5EGSPC','标普500')]:
   try:
    raw=json.loads(get(f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=10d&interval=1d',timeout=8))
    result=raw['chart']['result'][0];timestamps=result.get('timestamp') or []
@@ -162,16 +162,16 @@ def fetch_benchmarks(history):
    effective_date=datetime.fromtimestamp(close_ts,timezone.utc).date().isoformat()
    out[key]={'name':label,'symbol':symbol,'price':round(close,2),'change':round(change,2),
              'previous_price':round(prev,2),'change_pct':round(change/prev*100,2),'effective_date':effective_date,
-             'source':'Yahoo Finance daily chart','status':'live',
+             'source':'Yahoo Finance daily chart (NDX/S&P 500 index)','status':'live',
              'updated_at':now.isoformat(timespec='seconds')}
   except Exception as exc:
    old=next((h.get('benchmarks',{}).get(key) for h in history
              if h.get('benchmarks',{}).get(key,{}).get('price') is not None),None)
    if old:out[key]={**old,'status':'fallback','error':str(exc)}
    else:out[key]={'name':label,'symbol':symbol,'price':None,'change':None,
-                  'previous_price':None,'change_pct':None,'effective_date':None,'source':'Yahoo Finance daily chart',
+                  'previous_price':None,'change_pct':None,'effective_date':None,'source':'Yahoo Finance daily chart (NDX/S&P 500 index)',
                   'status':'unavailable','error':str(exc)}
-   errs.append({'source':'benchmark '+symbol,'error':str(exc)})
+   errs.append({'source':'benchmark '+key,'error':str(exc)})
  return out,errs
 
 def previous_day():
@@ -200,7 +200,7 @@ def main():
   else:
    a,b=comparable(x.get('agency_limit')),comparable(p.get('agency_limit'))
    x['change']='same' if a==b else ('changed')
- payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'benchmarks':benchmarks,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）','Yahoo Finance QQQ/SPY 日线（最近美股常规交易日收盘）'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留上一份 Yahoo 有效快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外不展示溢价、净值或日涨跌。QQQ/SPY 使用 Yahoo Finance 最近美股常规交易日收盘，采集失败时保留上一份有效快照。近一年收益仅取天天基金 pingzhongdata 的 syl_1n。'}
+ payload={'date':today,'updated_at':now.isoformat(timespec='seconds'),'duration_seconds':round(time.perf_counter()-started,2),'otc':otc,'etf':etf,'benchmarks':benchmarks,'errors':errs,'sources':['天天基金/东方财富公开基金销售页','qdiilimit公开汇总（场外额度/费率及场内基础信息）','东方财富/腾讯公开场内行情','天天基金pingzhongdata syl_1n（近一年）','Yahoo Finance NDX/S&P 500 日线（最近美股常规交易日收盘）'],'validation_note':'场内价格、涨跌、成交额来自东方财富/腾讯公开行情，失败保留上一份 Yahoo 有效快照并标记fallback；场内溢价率为qdiilimit最近已发布的T-1数据。场外不展示溢价、净值或日涨跌。NDX（Nasdaq-100 Price Return）与标普500使用 Yahoo Finance 最近美股常规交易日收盘，采集失败时保留上一份有效快照。近一年收益仅取天天基金 pingzhongdata 的 syl_1n。'}
  publish(payload,DATA,history)
  print(json.dumps({'ok':True,'duration_seconds':payload['duration_seconds'],'otc':len(otc),'etf':len(etf),'errors':len(errs)},ensure_ascii=False))
 if __name__=='__main__':main()
